@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'customer_site',
     'employee_site',
     'homepage',
-    'login',
     'core_files',
 
 ]
