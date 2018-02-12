@@ -1,0 +1,23 @@
+{% extends "empbase.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="req_list"
+         align="justify"
+         style="float: left; width: 50%">
+        This is where the list of requests will be.
+    </div>
+    <div id="req_details"
+         style="float: right; width: 50%"
+         align="justify">
+        <!-- request details goes here -->
+        details, <br/>
+        details, <br/>
+        and of course, <br/>
+        details. <br/>
+        <form method="post">
+            {% csrf_token %}
+            <input type="button" value="Approve"/>
+            <input type="button" value="Deny"/>
+        </form>
+    </div>
+{% endblock %}
