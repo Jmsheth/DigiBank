@@ -7,7 +7,8 @@ from django.urls import path
 app_name = "login"
 
 urlpatterns = [
-    path('', views.login, name='login'),
+    path('', views.home, name= 'cusHome'),
+    path('login/', views.login, name='login'),
     path('auth/', views.auth, name='auth'),
     path('forgot/', views.forget,name='forgot'),
     path('reset/', views.reset, name='reset'),

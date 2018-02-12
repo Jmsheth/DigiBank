@@ -5,6 +5,9 @@ from _overlapped import NULL
 from django.template.context_processors import request
 
 # Create your views here.
+def home(request):
+    return render(request,'login/cusHome.html')
+
 def login(request):
     return render(request,'login/login.html',{})
 

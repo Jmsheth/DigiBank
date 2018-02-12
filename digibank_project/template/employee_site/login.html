@@ -1,0 +1,19 @@
+{% extends 'empbase.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="card back" >
+          <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
+<!--             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" /> -->
+            <h4>Login to your account</h4><br>
+            <form class="form-signin" method="post" action="{% url 'login:auth' %}">
+            {% csrf_token %}
+                <input id="loginid" name="loginid" class="form-control" placeholder="Login ID" required autofocus><br>
+                <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Password" required>
+                <br><br>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            </form><br>
+            <a href="/login/forgot" class="fp">
+                Forgot the password?
+            </a>
+    </div>
+{% endblock %}
