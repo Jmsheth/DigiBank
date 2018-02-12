@@ -19,27 +19,3 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.firstName
-
-class Account(models.Model):
-    # Account Model included by<kashif> to utilize Account details
-    accountNum = models.IntegerField()
-    routingNum = models.IntegerField()
-    balance = models.FloatField(max_length=20)
-    acntType = models.CharField(max_length=15)
-    owner = models.ForeignKey(Customer, null=False,on_delete= models.CASCADE)
-
-    def __str__(self):
-        return self.owner
-
-
-class Transaction(models.Model):
-    # Transaction Model included by<kashif> to utilize Transaction details
-    accntTo = models.CharField(max_length=15, null=False)
-    accntFrom = models.ForeignKey(Account, null=False, on_delete= models.CASCADE)
-    dateTime = models.DateTimeField(null=False)
-    amount= models.FloatField(max_length=15)
-
-    def __str__(self):
-        return self.id
-
-

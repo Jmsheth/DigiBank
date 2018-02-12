@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="left"
+         align="justify"
+         style="float: left;
+         width: 50%;">
+        <form method="post">
+            {% csrf_token %}
+            <ul style="list-style-type: none;">
+                <li><!--Field for account holder name-->
+                    Name:
+                </li>
+                <li>-OR-</li>
+                <li><!--Field for account number-->
+                    Account Number:
+                </li>
+            </ul>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+    <div id="right"
+         style="float: right;
+                width: 50%;
+                outline: 3px solid blue;
+                outline-offset: 10px;"
+         align="justify">
+        User details will go here <br/>
+        name...<br/>
+        account,<br/>
+        account,<br/>
+        ...<br/>
+    </div>
+{% endblock %}
