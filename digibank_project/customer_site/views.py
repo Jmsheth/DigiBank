@@ -36,6 +36,7 @@ def reset(request):
         return redirect('login:resetpassword')
     else:
         ...
+        #return redirect('customer_site:forgot')
 
 
 def resetpassword(request):
@@ -50,4 +51,4 @@ def resetauth(request):
         Customer.objects.filter(emailAdd=em).update(password=pwd1)
         return redirect('login:login')
     else:
-        print("password not match")
+        return redirect('customer_site:resetpassword')
