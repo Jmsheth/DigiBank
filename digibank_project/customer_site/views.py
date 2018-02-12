@@ -12,13 +12,13 @@ def login(request):
 def auth(request):
     userid = request.POST["loginid"]
     password = request.POST["pwd"]
-
-    user = Customer.objects.get(userid=userid, password=password)
-    if user is not None:
-        return redirect('homepage:index')
-        print("Success Login")
-    else:
-        return redirect('customer_site:login')
+    try:
+        user = Customer.objects.get(userid=userid, password=password)
+        if user is not None:
+            return redirect('homepage:index')
+            print("Success Login")
+    except:
+        return redirect('login:login')
 
 
 def forget(request):
@@ -28,15 +28,14 @@ def forget(request):
 def reset(request):
     email = request.POST["email"]
     idnum = request.POST["idnum"]
-
-    found = Customer.objects.get(emailAdd=email, idNumber=idnum)
-    if found is not None:
-        global em
-        em = email
-        return redirect('login:resetpassword')
-    else:
-        ...
-        #return redirect('customer_site:forgot')
+    try:
+        found = Customer.objects.get(emailAdd=email, idNumber=idnum)
+        if found is not None:
+            global em
+            em = email
+            return redirect('login:resetpassword')
+    except:
+        return redirect('login:forgot')
 
 
 def resetpassword(request):
@@ -47,8 +46,13 @@ def resetauth(request):
     pwd1 = request.POST["pwd1"]
     pwd2 = request.POST["pwd2"]
 
-    if pwd1 == pwd2:
-        Customer.objects.filter(emailAdd=em).update(password=pwd1)
-        return redirect('login:login')
-    else:
-        return redirect('customer_site:resetpassword')
+    try:
+        if pwd1 == pwd2:
+            Customer.objects.filter(emailAdd=em).update(password=pwd1)
+            return redirect('login:login')
+    except:
+        return redirect('login:resetpassword')
+
+
+def userAccountSummary(request):
+    ...
