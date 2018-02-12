@@ -1,0 +1,31 @@
+body{
+	background-color: #E1E0E5;
+}
+.myclass{
+	text-align: center;
+}
+.ess1{
+	text-align: center;
+	padding-top: 50px;
+	color:red;
+}
+ul.b {
+    list-style-type: square;
+}
+
+.back{
+	border: 2px solid black;
+  	margin: auto;
+  	position: relative;
+  	text-align: center;
+  	top: 50%;
+  	width: 25%;
+ 	background-color: #000080;
+ 	color: #E1E0E5;
+}
+.fp{
+	color:white;
+}
+.logo{
+	font-family: 'Bungee', cursive;
+}
