@@ -23,6 +23,16 @@ ul.b {
  	background-color: #000080;
  	color: #E1E0E5;
 }
+.elog{
+	border: 2px solid black;
+  	margin: auto;
+  	position: relative;
+  	text-align: center;
+  	top: 50%;
+  	width: 25%;
+ 	background-color: #000080;
+ 	color: #B40404;
+}
 .fp{
 	color:white;
 }

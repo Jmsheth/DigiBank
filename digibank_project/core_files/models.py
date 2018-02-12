@@ -1,10 +1,9 @@
 from django.db import models
-from ..customer_site.models import Customer
 
-
+'''
 # Create your models here.
 class DDRequest(models.Model):
-    requester = models.ForeignKey(Customer,
+    requester = models.ForeignKey(models.Customer,
                                   on_delete=models.DO_NOTHING)
     rec_name = models.CharField(max_length=100)
     amount = models.IntegerField()
@@ -33,7 +32,7 @@ class Account(models.Model):
     routingNum = models.IntegerField()
     balance = models.FloatField(max_length=20)
     acntType = models.CharField(max_length=15)
-    owner = models.ForeignKey(Customer, null=False,
+    owner = models.ForeignKey(models.Customer, null=False,
                               on_delete=models.CASCADE)
 
     def __str__(self):
@@ -52,3 +51,4 @@ class Transaction(models.Model):
         return self.accntFrom.accountNum \
                + " to " + self.accntTo
 
+'''
