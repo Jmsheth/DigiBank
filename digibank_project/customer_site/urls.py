@@ -18,5 +18,8 @@ urlpatterns = [
     path('authreset/',views.resetpassauth,name='passauth'),
     path('logout/',views.logout,name='logout'),
     # URLS for Changes included by <kashif>
-    path('userAccountSummary',views.userAccountSummary,name='userAccountSummary'),
+    path('userAccountSummary/',views.userAccountSummary_vw.as_view(),name='userAccountSummary'),
+    path('userTransactionReport/',views.userTransactionReport_vw.as_view(), name='userTransactionReport'),
+    path('userFundsTransfer/', views.userFundsTransfer_vw.as_view(), name='userFundsTransfer'),
+
 ]

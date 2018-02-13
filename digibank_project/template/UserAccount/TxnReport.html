@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
-<h2 class="myc"> User Transaction Report </h2>
+{% block content %}
+<h2> User Transaction Report </h2>
 <form method = "POST" class="myc">
  {% csrf_token %}
     <table>
-        {{ form.as_table }}
+        <tr>
+            {{ form.as_table }}
+        <tr/>
+        <tr>
+            <td><b>Date From:</b></td>
+            <td><input type="date" name="mydate"></td>
+        </tr>
 
+        <tr>
+            <td><b>Date To:  </b></td>
+            <td><input type="date" name="mydate"></td>
+        </tr>
     </table>
 
-    <button type = "submit"> Submit </button>
+    <button type = "submit"> View Report </button>
 
 </form>
+{% endblock %}
