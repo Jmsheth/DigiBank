@@ -16,6 +16,7 @@ urlpatterns = [
     path('resetauth/', views.resetauth, name='resetauth'),
     path('changepass/', views.changepass, name='changePass'),
     path('authreset/',views.resetpassauth,name='passauth'),
+    path('logout/',views.logout,name='logout'),
     # URLS for Changes included by <kashif>
     path('userAccountSummary',views.userAccountSummary,name='userAccountSummary'),
 ]

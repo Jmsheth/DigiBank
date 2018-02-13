@@ -6,7 +6,7 @@
             <h4>Reset your password</h4>
             <form class="form-signin" method="post" action="{% url 'login:passauth' %}">
             {% csrf_token %}
-                <input name="curpass" class="form-control" placeholder="Current Password" required autofocus><br>
+                <input type="password" name="curpass" class="form-control" placeholder="Current Password" required><br>
                 <input type="password" name="newpass" class="form-control" placeholder="New Password" required><br>
                 <input type="password" name="conpass" class="form-control" placeholder="Confirm Password" required>
                 <br><br>
