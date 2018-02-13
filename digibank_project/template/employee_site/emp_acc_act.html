@@ -1,0 +1,37 @@
+{% extends "empbase.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="left"
+         align="justify"
+         style="float: left;
+         width: 50%;">
+        <fieldset>
+            <legend>Search:</legend>
+            <form method="post">
+                {% csrf_token %}
+                <ul style="list-style-type: none;">
+                    <li><!--Field for account holder name-->
+                        Name:
+                    </li>
+                    <li>-OR-</li>
+                    <li><!--Field for account number-->
+                        Account Number:
+                    </li>
+                </ul>
+                <input type="submit" value="Search"/>
+            </form>
+        </fieldset>
+    </div>
+    <div id="right"
+         style="float: right;
+                width: 50%;
+                outline: 3px solid blue;
+                outline-offset: 10px;"
+         align="justify">
+        <ul>
+        {% for customer in customers %}
+            <li>{{ customer }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

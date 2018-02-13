@@ -10,32 +10,36 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
-<nav class="navbar navbar-inverse bg-primary" style="background-color: #000080;">
+<nav class="navbar navbar-inverse bg-primary" style="background-color: #2A3457;">
 	<div class="container-fluid">
 		<div class="navbar-header">
-
 			<a class="navbar-brand" href="/">DigiBank</a>
-
 		</div>
-		<ul class="nav navbar-nav">
-      		<li class="dropdown">
-        		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
+		<ul class="nav navbar-nav navbar-right">
+			{% if sessionid %}
+			<li class="dropdown">
+        		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
         	<span class="caret"></span></a>
         	<ul class="dropdown-menu">
-          		<li><a href="#">Page 1-1</a></li>
-         		 <li><a href="#">Page 1-2</a></li>
+          		<li><a href="#">Update Profile</a></li>
+         		 <li><a href="{% url 'login:changePass' %}">Change Password</a></li>
           		<li><a href="#">Page 1-3</a></li>
         	</ul>
       		</li>
-     	</ul>
-
-		<ul class="nav navbar-nav navbar-right">
-				<li class="">
-					<a href="/login">
+			<li class="">
+					<a href="{% url 'login:logout'%}">
+						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;
+						Logout
+					</a>
+				</li>
+			{% else %}
+			<li class="">
+					<a href="{% url 'login:login'%}">
 						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;
 						Login
 					</a>
-				</li>
+			</li>
+			{% endif %}
 		</ul>
 	</div>
 </nav>
