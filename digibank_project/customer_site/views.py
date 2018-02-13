@@ -55,4 +55,4 @@ def resetauth(request):
 
 
 def userAccountSummary(request):
-    ...
+    pass

@@ -1,8 +1,18 @@
 from django.shortcuts import render
+from customer_site.models import Customer
+from core_files.models import DDRequest
+
 
 # Create your views here.
 def emp_account_act(request):
-    return render(request, "employee_site/emp_acc_act.html", {})
+    customer_list = Customer.objects.all()
+    return render(request,
+                  "employee_site/emp_acc_act.html",
+                  {"customers": customer_list})
+
 
 def emp_dd_req(request):
-    return render(request, "employee_site/emp_dd_req.html", {})
+    dd_requests = DDRequest.objects.filter(approved=False)
+    return render(request,
+                  "employee_site/emp_dd_req.html",
+                  {"dd_requests": dd_requests})

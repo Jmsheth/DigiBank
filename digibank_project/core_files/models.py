@@ -1,5 +1,5 @@
 from django.db import models
-from ..customer_site.models import Customer
+from customer_site.models import Customer
 
 
 # Create your models here.
@@ -16,6 +16,7 @@ class DDRequest(models.Model):
     send_date = models.DateField()
     payable_date = models.DateField()
     message = models.CharField(max_length=240)
+    approved = models.BooleanField(default=False)
 
 
 class CheckRequest(models.Model):

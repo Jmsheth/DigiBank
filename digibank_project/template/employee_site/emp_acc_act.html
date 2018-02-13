@@ -5,19 +5,22 @@
          align="justify"
          style="float: left;
          width: 50%;">
-        <form method="post">
-            {% csrf_token %}
-            <ul style="list-style-type: none;">
-                <li><!--Field for account holder name-->
-                    Name:
-                </li>
-                <li>-OR-</li>
-                <li><!--Field for account number-->
-                    Account Number:
-                </li>
-            </ul>
-            <input type="submit" value="Search"/>
-        </form>
+        <fieldset>
+            <legend>Search:</legend>
+            <form method="post">
+                {% csrf_token %}
+                <ul style="list-style-type: none;">
+                    <li><!--Field for account holder name-->
+                        Name:
+                    </li>
+                    <li>-OR-</li>
+                    <li><!--Field for account number-->
+                        Account Number:
+                    </li>
+                </ul>
+                <input type="submit" value="Search"/>
+            </form>
+        </fieldset>
     </div>
     <div id="right"
          style="float: right;
@@ -25,10 +28,10 @@
                 outline: 3px solid blue;
                 outline-offset: 10px;"
          align="justify">
-        User details will go here <br/>
-        name...<br/>
-        account,<br/>
-        account,<br/>
-        ...<br/>
+        <ul>
+        {% for customer in customers %}
+            <li>{{ customer }}</li>
+        {% endfor %}
+        </ul>
     </div>
 {% endblock %}
