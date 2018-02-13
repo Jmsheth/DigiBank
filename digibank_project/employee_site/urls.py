@@ -8,7 +8,10 @@ urlpatterns = [
     path('login/',views.empLogin,name='empLogin'),
     path("account_activation/",
          views.emp_account_act,
-         name="account activation"),
+         name="Account Activation"),
+    path("account_activation/<int:pk>/",
+         views.emp_account_act,
+         name="Account Activation"),
     path("dd_req/",
          views.emp_dd_req,
          name="DD requests")

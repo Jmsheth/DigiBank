@@ -7,30 +7,52 @@
          width: 50%;">
         <fieldset>
             <legend>Search:</legend>
-            <form method="post">
-                {% csrf_token %}
+            <form name="search" method="get">
                 <ul style="list-style-type: none;">
                     <li><!--Field for account holder name-->
-                        Name:
+                        <label>First Name: </label>{{ form.f_name }}
                     </li>
-                    <li>-OR-</li>
-                    <li><!--Field for account number-->
-                        Account Number:
+                    <li>
+                        <label>Last Name:</label>
+                        {{ form.l_name }}
+                    </li>
+                    <li>
+                        <label>Username: </label>
+                        {{ form.u_name }}
+                    </li>
+                    <li>
+                        <label>ID Number:</label>
+                        {{ form.id_num }}
                     </li>
                 </ul>
-                <input type="submit" value="Search"/>
+                <input type="submit" name="search" value="Search"/>
             </form>
         </fieldset>
     </div>
     <div id="right"
          style="float: right;
                 width: 50%;
-                outline: 3px solid blue;
+                outline: 3px solid red;
                 outline-offset: 10px;"
          align="justify">
         <ul>
         {% for customer in customers %}
-            <li>{{ customer }}</li>
+            <li>
+                {{ customer }}
+                {% if customer.active %}
+                    <form method="post"
+                          action="/employee/account_activation/{{ customer.id }}/">
+                        {% csrf_token %}
+                        <input type="submit" value="Deactivate">
+                    </form>
+                    {% else %}
+                        <form method="post"
+                              action="/employee/account_activation/{{ customer.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Activate">
+                        </form>
+                {% endif %}
+            </li>
         {% endfor %}
         </ul>
     </div>
