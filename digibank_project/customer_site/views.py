@@ -6,7 +6,11 @@ from django.template.context_processors import request
 
 # Create your views here.
 def home(request):
-    return render(request,'login/cusHome.html')
+    try:
+        return render(request,'login/cusHome.html',{'sessionid':request.session['sessionid']})
+    except:
+        request.session['sessionid'] = ""
+        return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
 
 def login(request):
     return render(request,'login/login.html',{})
@@ -18,8 +22,8 @@ def auth(request):
     try:
         user = Customer.objects.get(userid=userid, password=password)
         if user is not None:
-            return redirect('homepage:index')
-            print("Success Login")
+            request.session['sessionid'] = str(user)
+            return redirect('login:cusHome')
     except:
         return redirect('login:login')
 
@@ -44,6 +48,9 @@ def reset(request):
 def resetpassword(request):
     return render(request, 'login/reset.html', {})
 
+def changepass(request):
+    return render(request,'login/changepass.html',{})
+
 
 def resetauth(request):
     pwd1 = request.POST["pwd1"]
@@ -55,6 +62,9 @@ def resetauth(request):
             return redirect('login:login')
     except:
         return redirect('login:resetpassword')
+
+def resetpassauth(request):
+    return render(request,'login/changepass.html',{})
 
 
 def userAccountSummary(request):
