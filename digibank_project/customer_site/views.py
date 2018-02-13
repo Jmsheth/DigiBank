@@ -6,11 +6,12 @@ from django.template.context_processors import request
 
 # Create your views here.
 def home(request):
+    #return render(request, 'login/cusHome.html')
     try:
-        return render(request,'login/cusHome.html',{'sessionid':request.session['sessionid']})
+         return render(request,'login/cusHome.html',{'sessionid':request.session['sessionid']})
     except:
-        request.session['sessionid'] = ""
-        return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
+         request.session['sessionid'] = ""
+         return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
 
 def login(request):
     return render(request,'login/login.html',{})
@@ -20,10 +21,9 @@ def auth(request):
     userid = request.POST["loginid"]
     password = request.POST["pwd"]
     try:
-        user = Customer.objects.get(userid=userid, password=password)
-        if user is not None:
-            request.session['sessionid'] = str(user)
-            return redirect('login:cusHome')
+        user = Customer.objects.get(userid=userid,password=password)
+        request.session['sessionid'] = user.userid
+        return redirect('login:cusHome')
     except:
         return redirect('login:login')
 
@@ -49,7 +49,7 @@ def resetpassword(request):
     return render(request, 'login/reset.html', {})
 
 def changepass(request):
-    return render(request,'login/changepass.html',{})
+    return render(request,'login/changepass.html',{'sessionid':request.session['sessionid']})
 
 
 def resetauth(request):
@@ -63,9 +63,26 @@ def resetauth(request):
     except:
         return redirect('login:resetpassword')
 
-def resetpassauth(request):
-    return render(request,'login/changepass.html',{})
 
+def resetpassauth(request):
+    currpass = request.POST["curpass"]
+    newpass = request.POST["newpass"]
+    conpass = request.POST["conpass"]
+    print("Reset Area")
+    try:
+        if(newpass==conpass):
+            Customer.objects.filter(userid=request.session['sessionid'], password=currpass).update(password=conpass)
+        del request.session['sessionid']
+        return redirect('login:cusHome')
+    except:
+        return redirect('login:changePass')
+
+def logout(request):
+    try:
+        del request.session['sessionid']
+    except KeyError:
+        pass
+    return redirect('login:cusHome')
 
 def userAccountSummary(request):
     pass
