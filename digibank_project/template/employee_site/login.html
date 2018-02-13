@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'empbase.html' %}
 {% load staticfiles %}
 {% block content %}
     <div class="card back" >
@@ -12,7 +12,7 @@
                 <br><br>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
             </form><br>
-            <a href="{% url 'login:forgot'%}" class="fp">
+            <a href="/login/forgot" class="fp">
                 Forgot the password?
             </a>
     </div>

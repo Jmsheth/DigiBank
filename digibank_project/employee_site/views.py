@@ -4,6 +4,12 @@ from core_files.models import DDRequest
 
 
 # Create your views here.
+def empHome(request):
+    return render(request,'employee_site/home.html',{})
+
+def empLogin(request):
+    return render(request, 'employee_site/login.html',{})
+
 def emp_account_act(request):
     customer_list = Customer.objects.all()
     return render(request,
