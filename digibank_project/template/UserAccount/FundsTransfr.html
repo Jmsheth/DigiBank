@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+<h2 class="myc"> User Fund Transfer </h2>
+<form method = "POST" class="myc">
+ {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+
+    </table>
+
+    <button type = "submit"> Submit </button>
+
+</form>

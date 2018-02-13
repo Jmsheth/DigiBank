@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.views.generic import CreateView
 from django.http import HttpResponse
-from . models import Customer
+from . models import Customer,Account,Transaction
+from .forms import userAccountSummary,userTransactionReport,userFundstransfer
 from _overlapped import NULL
 from django.template.context_processors import request
 
@@ -52,3 +54,65 @@ def resetauth(request):
         return redirect('login:login')
     else:
         return redirect('customer_site:resetpassword')
+
+
+class userAccountSummary_vw(CreateView):
+    model = Account
+    template_name = 'AccountSummary.html'
+    form_class = userAccountSummary
+
+    def form_valid(self, form):
+        if form.is_valid():
+            uAcntSmry = form.save(commit=False)
+            return super(userAccountSummary_vw,self).form_valid(form)
+
+    def edit_vw(request,id):
+
+        instance = Account.objects.get(id=id)
+        form = userAccountSummary(request.POST or None,instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect("edit")
+        return render(request,'AccountSummary.html',{'form':form})
+
+#
+# class userTransactionReport_vw(CreateView):
+#     model = Account
+#     template_name = 'FundsTransfr.html'
+#     form_class = userTransactionReport
+#
+#     def form_valid(self, form):
+#         if form.is_valid():
+#             utrxnSmry = form.save(commit=False)
+#             return super(userTransactionReport_vw,self).form_valid(form)
+#
+#
+#      def edit_vw(request,id):
+#
+#         instance = Account.objects.get(id=id)
+#         form = userTransactionReport(request.POST or None,instance=instance)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("FundsTransfr.html")
+#         return render(request,'/',{'form':form})
+#
+#
+# class userFundsTransfer_vw(CreateView):
+#     model = Account
+#     template_name = 'TxnReport.html'
+#     form_class = userFundstransfer
+#
+#     def form_valid(self, form):
+#         if form.is_valid():
+#             uTrsfr = form.save(commit=False)
+#             return super(userFundsTransfer_vw,self).form_valid(form)
+#
+#
+#     def edit_vw(request,id):
+#
+#         instance = Account.objects.get(id=id)
+#         form = userFundstransfer(request.POST or None,instance=instance)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("edit")
+#         return render(request,'TxnReport.html',{'form':form})

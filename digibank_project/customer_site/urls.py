@@ -13,6 +13,12 @@ urlpatterns = [
     path('reset/', views.reset, name='reset'),
     path('resetpassword/', views.resetpassword, name='resetpassword'),
     path('resetauth/', views.resetauth, name='resetauth'),
+
     # URLS for Changes included by <kashif>
-    path('userAccountSummary',views.userAccountSummary,name='userAccountSummary'),
+
+    path('userAccountSummary/',views.userAccountSummary, name='userAccountSummary'),
+    path('userTransactionReport/',views.userTransactionReport, name='userTransactionReport'),
+    path('userFundstransfer/', views.userFundstransfer, name='userFundstransfer'),
+
+    # URLS for Changes included by <kashif>
 ]
