@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}DigiBank{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+
+        <h3>Personal info</h3>
+        <div class="container" style="margin-left:10%;">
+        <form class="form-horizontal" role="form" method="post">
+          <div class="form-group row">
+            <div class="col-xs-3">
+                <label>First Name:</label>
+                <input class="form-control" type="text" value="{{ customer.firstName }}">
+            </div>
+            <div class="col-xs-3">
+                <label>Middle Name:</label>
+                <input class="form-control" type="text" value="{{ customer.middleName }}">
+            </div>
+            <div class="col-xs-3">
+                <label>Last name:</label>
+                <input class="form-control" type="text" value="{{ customer.lastName }}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-6">
+                <label>Street Address:</label>
+                <input class="form-control" type="text" value="{{ customer.address }}">
+            </div>
+            <div class="col-xs-3">
+                <label>City:</label>
+                <input class="form-control" type="text" value="{{ customer.city }}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-3">
+                <label>State:</label>
+                <input class="form-control" type="text" value="{{ customer.state }}">
+            </div>
+            <div class="col-xs-3">
+                <label>Zipcode:</label>
+                <input class="form-control" type="text" value="{{ customer.zipCode }}">
+            </div>
+            <div class="col-xs-3">
+                <label>Country:</label>
+                <input class="form-control" type="text" value="{{ customer.country }}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-3">
+                <label>Email Address: </label>
+                <input class="form-control" type="text" value="{{ customer.emailAdd }}">
+            </div>
+            <div class="col-xs-3">
+                <label>User Name:</label>
+                <input class="form-control" type="text" value="{{ customer.userid }}">
+            </div>
+            <div class="col-xs-3">
+                <label>Contact Number:</label>
+                <input class="form-control" type="text" value="{{ customer.phoneNumber }}">
+            </div>
+          </div>
+            <br>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" value="Save Changes">
+              <span>    </span>
+              <input type="reset" class="btn btn-default" style="margin-left:5%;"value="Cancel">
+            </div>
+          </div>
+
+        </form>
+        </div>
+      </div>
+</div>
+<hr>
+
+{% endblock %}
