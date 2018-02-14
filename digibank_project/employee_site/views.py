@@ -34,6 +34,33 @@ def empLogout(request):
         pass
     return redirect('employee_site:empHome')
 
+def forgotpass(request):
+    return render(request,'employee_site/forgot.html',{})
+
+def reset(request):
+
+    try:
+        emp = EmpDetail.objects.get(emailAdd=request.POST["email"],empId=request.POST["idnum"])
+        if emp is not None:
+            global user
+            user = emp.userid
+            return redirect('employee_site:resetpassword')
+    except:
+        return redirect('employee_site:forgot')
+
+def resetpassword(request):
+    return render(request,'employee_site/reset.html',{})
+
+def resetauth(request):
+    try:
+        if request.POST['pwd1']==request.POST['pwd2']:
+            print("match")
+            print(user)
+            EmpDetail.objects.filter(userid=user).update(password=request.POST['pwd2'])
+            print("update")
+            return redirect('employee_site:empHome')
+    except:
+        return redirect('employee_site:reset')
 
 def emp_account_act(request, pk=-1):
     form = EmpAccActivationSearch()

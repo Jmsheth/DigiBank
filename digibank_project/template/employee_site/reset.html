@@ -1,0 +1,16 @@
+{% extends 'empbase.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="card back" >
+          <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
+            <h4>Reset Password</h4><br>
+            <form class="form-signin" method="post" action="{% url 'employee_site:resetauth' %}">
+            {% csrf_token %}
+                <input type="password" id="pwd1" name="pwd1" class="form-control" placeholder="Password" required autofocus><br>
+                <input type="password" id="pwd2" name="pwd2" class="form-control" placeholder="Confirm Password" required>
+                <br><br>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Submit</button>
+            </form><br>
+
+    </div>
+{% endblock %}
