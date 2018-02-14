@@ -7,10 +7,11 @@ from django.template.context_processors import request
 # Create your views here.
 def home(request):
     try:
-         return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
+        customer = Customer.objects.get(userid=request.session['sessionid'])
+        return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid'],'customer':customer})
     except:
-          request.session['sessionid'] = ""
-          return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
+        request.session['sessionid'] = ""
+        return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
 
 def login(request):
     return render(request,'login/login.html',{})
@@ -92,3 +93,14 @@ def userAccountSummary(request):
 def updateprofile(request):
     customer = Customer.objects.get(userid=request.session['sessionid'])
     return render(request, 'login/editprofile.html',{'sessionid':request.session['sessionid'], "customer": customer})
+
+def updateauth(request):
+    try:
+        Customer.objects.filter(userid=request.session['sessionid']).update(firstName=request.POST['firstName'],
+                            middleName=request.POST['middleName'],lastName=request.POST['lastName'],
+                            address=request.POST['address'],city=request.POST['city'],state=request.POST['state'],
+                            country=request.POST['country'],zipCode=request.POST['zipCode'],phoneNumber=request.POST['phoneNumber'],
+                            emailAdd=request.POST['emailAdd'],userid=request.POST['userid'])
+        return redirect('login:cusHome')
+    except:
+        return redirect('login:updateprofile')
