@@ -9,6 +9,7 @@ class Customer(models.Model):
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
     zipCode = models.CharField(max_length=10)
     phoneNumber = models.CharField(max_length=15)
     emailAdd = models.CharField(max_length=70, unique=True)

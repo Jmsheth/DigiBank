@@ -1,5 +1,7 @@
-body{
-	background-color: #E1E0E5;
+.bg{
+	background: url('images/digiback.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 .myclass{
 	text-align: center;
@@ -7,7 +9,7 @@ body{
 .ess1{
 	text-align: center;
 	padding-top: 50px;
-	color:red;
+	color:#2A3457;
 }
 ul.b {
     list-style-type: square;
