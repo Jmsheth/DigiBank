@@ -72,6 +72,7 @@ def emp_dd_req(request, pk=-1):
         dd_req.save()
         return redirect("/employee/dd_req/")
 
+
 def emp_checks(request, pk=-1):
     check_requests = CheckRequest.objects.filter(approved=False)
     if pk != -1:
