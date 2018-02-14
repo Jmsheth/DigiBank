@@ -1,0 +1,82 @@
+{% extends "empbase.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="req_list"
+         align="justify"
+         style="float: left; width: 50%">
+        <form method="get">
+            <table align="center" class="btn-group-vertical btn-group-lg">
+            {% for req in dd_requests %}
+                <tr>
+                    <td>
+                        <span class="">
+                        <BUTTON class="btn-block btn-default" type="submit"
+                                value="{{ req }}"
+                                formaction="/employee/dd_req/{{ req.id }}/">
+                            {{ req }}
+                        </BUTTON>
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        </form>
+    </div>
+    <div id="req_details"
+         style="float: right; width: 50%"
+         align="justify">
+            <fieldset>
+                <legend>Demand Draft Request</legend>
+                <table>
+                    <tr>
+                        <td>Request ID:</td>
+                        <td>{{ dd_req.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>Recipient Name:</td>
+                        <td>{{ dd_req.rec_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount:</td>
+                        <td>${{ dd_req.amount }}</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>{{ dd_req.address_st }},
+                            {{ dd_req.address_city }},
+                            {{ dd_req.address_state }},
+                            {{ dd_req.address_zip }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Recipient Phone Number:</td>
+                        <td>{{ dd_req.rec_phone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Send Date:</td>
+                        <td>{{ dd_req.send_date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Payable Date:</td>
+                        <td>{{ dd_req.payable_date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Message:</td>
+                    </tr>
+                </table>
+                <p align="center">{{ dd_req.message }}</p>
+            </fieldset>
+            <fieldset>
+                <legend>Requested By:</legend>
+                {{ customer.firstName }}
+                {{ customer.lastName }} <br/>
+                {{ customer.userid }}
+            </fieldset>
+        <form action="/employee/dd_req/{{ dd_req.id }}/" method="post">
+            {% csrf_token %}
+            <input type="submit"
+                   value="Approve"
+                   class="btn-block btn-default"/>
+        </form>
+    </div>
+{% endblock %}

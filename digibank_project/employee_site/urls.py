@@ -14,5 +14,14 @@ urlpatterns = [
          name="Account Activation"),
     path("dd_req/",
          views.emp_dd_req,
-         name="DD requests")
+         name="DD Requests"),
+    path("dd_req/<int:pk>/",
+         views.emp_dd_req,
+         name="DD Requests"),
+    path("check_req/",
+         views.emp_checks,
+         name="Check Requests"),
+    path("check_req/<int:pk>/",
+         views.emp_checks,
+         name="Check Requests")
 ]

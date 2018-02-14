@@ -1,0 +1,85 @@
+{% extends "empbase.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="req_list"
+         align="justify"
+         style="float: left; width: 50%">
+        <form method="get">
+            <table align="center" class="btn-group-vertical btn-group-lg">
+            {% for req in check_requests %}
+                <tr>
+                    <td>
+                        <span class="">
+                        <BUTTON class="btn-block btn-default" type="submit"
+                                value="{{ req }}"
+                                formaction="/employee/check_req/{{ req.id }}/">
+                            {{ req }}
+                        </BUTTON>
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        </form>
+    </div>
+    <div id="req_details"
+         style="float: right; width: 50%"
+         align="justify">
+            <fieldset>
+                <legend>Request Details</legend>
+                <table>
+                    <tr>
+                        <td>Request ID:</td>
+                        <td>{{ check_req.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>{{ check_req.address_st }},</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{ check_req.address_city }},</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{ check_req.address_state }},</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{ check_req.address_zip }}</td>
+                    </tr>
+                </table>
+                <legend>Account Details</legend>
+                <table>
+                    <tr>
+                        <td>Account Number:</td>
+                        <td>{{ acc.accountNum }}</td>
+                    </tr>
+                    <tr>
+                        <td>Routing Number:</td>
+                        <td>{{ acc.routingNum }}</td>
+                    </tr>
+                    <tr>
+                        <td>Balance:</td>
+                        <td>${{ acc.balance }}</td>
+                    </tr>
+                    <tr>
+                        <td>Account Type:</td>
+                        <td>{{ acc.acntType }}</td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend>Requested By:</legend>
+                {{ customer.firstName }}
+                {{ customer.lastName }} <br/>
+                {{ customer.userid }}
+            </fieldset>
+        <form action="/employee/check_req/{{ check_req.id }}/" method="post">
+            {% csrf_token %}
+            <input type="submit"
+                   value="Approve"
+                   class="btn-block btn-default"/>
+        </form>
+    </div>
+{% endblock %}

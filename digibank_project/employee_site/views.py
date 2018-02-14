@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from customer_site.models import Customer
-from core_files.models import DDRequest
+from core_files.models import DDRequest, CheckRequest, Account
 from .forms import EmpAccActivation, EmpAccActivationSearch
 from django.shortcuts import render,redirect
 from ..customer_site.models import Customer
@@ -29,13 +29,13 @@ def emp_account_act(request, pk=-1):
             customer_list = Customer.objects.all()
             if firstName:
                 print(firstName)
-                customer_list = customer_list.filter(firstName=firstName)
+                customer_list = customer_list.filter(firstName__iexact=firstName)
             if lastName:
                 print(lastName)
-                customer_list = customer_list.filter(lastName=lastName)
+                customer_list = customer_list.filter(lastName__iexact=lastName)
             if userid:
                 print(userid)
-                customer_list = customer_list.filter(userid=userid)
+                customer_list = customer_list.filter(userid__iexact=userid)
             if idNumber:
                 print(idNumber)
                 customer_list = customer_list.filter(idNumber=idNumber)
@@ -57,11 +57,46 @@ def emp_account_act(request, pk=-1):
         return redirect("/employee/account_activation/")
 
 
-def emp_dd_req(request):
+def emp_dd_req(request, pk=-1):
     dd_requests = DDRequest.objects.filter(approved=False)
-    return render(request,
-                  "employee_site/emp_dd_req.html",
-                  {"dd_requests": dd_requests})
+    if not dd_requests:
+        redirect("/employee/")
+    if pk == -1:
+        dd_req = dd_requests[0]
+    else:
+        dd_req = DDRequest.objects.get(pk=pk)
+    customer = Customer.objects.get(pk=dd_req.requester_id)
+    if request.method == "GET":
+        return render(request,
+                      "employee_site/emp_dd_req.html",
+                      {"dd_requests": dd_requests,
+                       "dd_req": dd_req,
+                       "customer": customer})
+    if request.method == "POST":
+        dd_req.approved = True
+        dd_req.save()
+        return redirect("/employee/dd_req/")
+
+def emp_checks(request, pk=-1):
+    check_requests = CheckRequest.objects.filter(approved=False)
+    if pk != -1:
+        check_req = CheckRequest.objects.get(pk=pk)
+    else:
+        check_req = check_requests[0]
+    acc = Account.objects.get(pk=check_req.account_id)
+    customer = Customer.objects.get(pk=acc.owner_id)
+    if request.method == "GET":
+        return render(request,
+                      "employee_site/emp_check.html",
+                      {"check_requests": check_requests,
+                       "check_req": check_req,
+                       "customer": customer,
+                       "acc": acc})
+    if request.method == "POST":
+        check_req.approved = not check_req.approved
+        check_req.save()
+        return redirect("/employee/check_req/")
+
 
 
 class empAccountSummary_vw(CreateView):
