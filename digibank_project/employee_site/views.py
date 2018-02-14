@@ -2,15 +2,37 @@ from django.shortcuts import render, redirect
 from customer_site.models import Customer
 from core_files.models import DDRequest
 from .forms import EmpAccActivation, EmpAccActivationSearch
+from .models import EmpDetail
 
 
 # Create your views here.
 def empHome(request):
-    return render(request,'employee_site/home.html',{})
-
+    try:
+        employee= EmpDetail.objects.get(userid=request.session['empsession'])
+        return render(request,'employee_site/home.html',{'empsession':request.session['empsession'],'employee':employee})
+    except:
+        request.session['empsession']=""
+        return render(request, 'employee_site/home.html', {'empsession': request.session['empsession']})
 
 def empLogin(request):
-    return render(request, 'employee_site/login.html',{})
+    return render(request,'employee_site/login.html',{})
+
+def auth(request):
+    userid= request.POST['userid']
+    password=request.POST['password']
+    try:
+        emp = EmpDetail.objects.get(userid=userid,password=password)
+        request.session['empsession']= emp.userid
+        return redirect('employee_site:empHome')
+    except:
+        return redirect({'employee_site:empLogin'})
+
+def empLogout(request):
+    try:
+        del request.session['empsession']
+    except KeyError:
+        pass
+    return redirect('employee_site:empHome')
 
 
 def emp_account_act(request, pk=-1):
