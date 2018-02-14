@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from . models import Customer
+from .models import Customer
 from _overlapped import NULL
 from django.template.context_processors import request
 
 # Create your views here.
 def home(request):
-    #return render(request, 'login/cusHome.html')
     try:
-         return render(request,'login/cusHome.html',{'sessionid':request.session['sessionid']})
+        customer = Customer.objects.get(userid=request.session['sessionid'])
+        return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid'],'customer':customer})
     except:
-         request.session['sessionid'] = ""
-         return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
+        request.session['sessionid'] = ""
+        return render(request, 'login/cusHome.html', {'sessionid': request.session['sessionid']})
 
 def login(request):
     return render(request,'login/login.html',{})
@@ -24,6 +24,7 @@ def auth(request):
         user = Customer.objects.get(userid=userid,password=password)
         request.session['sessionid'] = user.userid
         return redirect('login:cusHome')
+
     except:
         return redirect('login:login')
 
@@ -68,12 +69,14 @@ def resetpassauth(request):
     currpass = request.POST["curpass"]
     newpass = request.POST["newpass"]
     conpass = request.POST["conpass"]
-    print("Reset Area")
+
     try:
         if(newpass==conpass):
-            Customer.objects.filter(userid=request.session['sessionid'], password=currpass).update(password=conpass)
+            Customer.objects.filter(userid={'sessionid':request.session['sessionid']}, password=currpass).update(password=conpass)
+
         del request.session['sessionid']
-        return redirect('login:cusHome')
+        return redirect('login:cusHome') #{'sessionid': request.session['sessionid']})
+
     except:
         return redirect('login:changePass')
 
@@ -86,3 +89,18 @@ def logout(request):
 
 def userAccountSummary(request):
     pass
+
+def updateprofile(request):
+    customer = Customer.objects.get(userid=request.session['sessionid'])
+    return render(request, 'login/editprofile.html',{'sessionid':request.session['sessionid'], "customer": customer})
+
+def updateauth(request):
+    try:
+        Customer.objects.filter(userid=request.session['sessionid']).update(firstName=request.POST['firstName'],
+                            middleName=request.POST['middleName'],lastName=request.POST['lastName'],
+                            address=request.POST['address'],city=request.POST['city'],state=request.POST['state'],
+                            country=request.POST['country'],zipCode=request.POST['zipCode'],phoneNumber=request.POST['phoneNumber'],
+                            emailAdd=request.POST['emailAdd'],userid=request.POST['userid'])
+        return redirect('login:cusHome')
+    except:
+        return redirect('login:updateprofile')
