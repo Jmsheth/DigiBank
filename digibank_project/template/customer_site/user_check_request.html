@@ -1,0 +1,46 @@
+{% extends "empbase.html" %}
+{% load staticfiles %}
+{% block content %}
+<div id="user_details">
+    <p>
+        {{ user.firstName }} {{ user.lastName }},<br/>
+        {{ user.userid }}
+    </p>
+</div>
+<div id="forms_left"
+     style="float: left;
+            width: 50%;
+            overflow: auto;">
+    <fieldset>
+        <legend>Check Request</legend>
+        <form method="post">
+            <table>
+                {{ form.as_table }}
+            </table>
+            <small>*This address is where the checks should be sent to.</small>
+            <input type="submit" value="Confirm">
+        </form>
+    </fieldset>
+</div>
+<div id="details_right"
+     style="float: right;
+            width: 50%;
+            overflow: auto;">
+    {% for acc in accounts %}
+        <section>
+            <strong>{{ acc.acntType }}</strong> - <kbd>{{ acc.accountNum }}</kbd><br/>
+            <table>
+                <tr>
+                    <td>Routing Number:</td>
+                    <td>{{ acc.routingNum }}</td>
+                </tr>
+                <tr>
+                    <td>Balance:</td>
+                    <td>${{ acc.balance }}</td>
+                </tr>
+            </table>
+        </section>
+    {% endfor %}
+
+</div>
+{% endblock %}
