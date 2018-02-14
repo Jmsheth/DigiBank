@@ -22,5 +22,5 @@ urlpatterns = [
     path('userTransactionReport/',views.userTransactionReport_vw.as_view(), name='userTransactionReport'),
     path('userFundsTransfer/', views.userFundsTransfer_vw.as_view(), name='userFundsTransfer'),
 
-    path('userAccountSummary', views.userAccountSummary, name='userAccountSummary'),
+
 ]
