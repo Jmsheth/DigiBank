@@ -8,23 +8,9 @@
         <fieldset>
             <legend>Search:</legend>
             <form name="search" method="get">
-                <ul style="list-style-type: none;">
-                    <li><!--Field for account holder name-->
-                        <label>First Name: </label>{{ form.f_name }}
-                    </li>
-                    <li>
-                        <label>Last Name:</label>
-                        {{ form.l_name }}
-                    </li>
-                    <li>
-                        <label>Username: </label>
-                        {{ form.u_name }}
-                    </li>
-                    <li>
-                        <label>ID Number:</label>
-                        {{ form.id_num }}
-                    </li>
-                </ul>
+                <table>
+                {{ form.as_table }}
+                </table>
                 <input type="submit" name="search" value="Search"/>
             </form>
         </fieldset>

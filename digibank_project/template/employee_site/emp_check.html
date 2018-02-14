@@ -6,13 +6,13 @@
          style="float: left; width: 50%">
         <form method="get">
             <table align="center" class="btn-group-vertical btn-group-lg">
-            {% for req in dd_requests %}
+            {% for req in check_requests %}
                 <tr>
                     <td>
                         <span class="">
                         <BUTTON class="btn-block btn-default" type="submit"
                                 value="{{ req }}"
-                                formaction="/employee/dd_req/{{ req.id }}/">
+                                formaction="/employee/check_req/{{ req.id }}/">
                             {{ req }}
                         </BUTTON>
                         </span>
@@ -26,45 +26,48 @@
          style="float: right; width: 50%"
          align="justify">
             <fieldset>
-                <legend>Demand Draft Request</legend>
+                <legend>Request Details</legend>
                 <table>
                     <tr>
                         <td>Request ID:</td>
-                        <td>{{ dd_req.id }}</td>
-                    </tr>
-                    <tr>
-                        <td>Recipient Name:</td>
-                        <td>{{ dd_req.rec_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Amount:</td>
-                        <td>${{ dd_req.amount }}</td>
+                        <td>{{ check_req.id }}</td>
                     </tr>
                     <tr>
                         <td>Address:</td>
-                        <td>{{ dd_req.address_st }},
-                            {{ dd_req.address_city }},
-                            {{ dd_req.address_state }},
-                            {{ dd_req.address_zip }}
-                        </td>
+                        <td>{{ check_req.address_st }},</td>
                     </tr>
                     <tr>
-                        <td>Recipient Phone Number:</td>
-                        <td>{{ dd_req.rec_phone }}</td>
+                        <td></td>
+                        <td>{{ check_req.address_city }},</td>
                     </tr>
                     <tr>
-                        <td>Send Date:</td>
-                        <td>{{ dd_req.send_date }}</td>
+                        <td></td>
+                        <td>{{ check_req.address_state }},</td>
                     </tr>
                     <tr>
-                        <td>Payable Date:</td>
-                        <td>{{ dd_req.payable_date }}</td>
-                    </tr>
-                    <tr>
-                        <td>Message:</td>
+                        <td></td>
+                        <td>{{ check_req.address_zip }}</td>
                     </tr>
                 </table>
-                <p align="center">{{ dd_req.message }}</p>
+                <legend>Account Details</legend>
+                <table>
+                    <tr>
+                        <td>Account Number:</td>
+                        <td>{{ acc.accountNum }}</td>
+                    </tr>
+                    <tr>
+                        <td>Routing Number:</td>
+                        <td>{{ acc.routingNum }}</td>
+                    </tr>
+                    <tr>
+                        <td>Balance:</td>
+                        <td>${{ acc.balance }}</td>
+                    </tr>
+                    <tr>
+                        <td>Account Type:</td>
+                        <td>{{ acc.acntType }}</td>
+                    </tr>
+                </table>
             </fieldset>
             <fieldset>
                 <legend>Requested By:</legend>
@@ -72,7 +75,7 @@
                 {{ customer.lastName }} <br/>
                 {{ customer.userid }}
             </fieldset>
-        <form action="/employee/dd_req/{{ dd_req.id }}/" method="post">
+        <form action="/employee/check_req/{{ check_req.id }}/" method="post">
             {% csrf_token %}
             <input type="submit"
                    value="Approve"
