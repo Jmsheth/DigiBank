@@ -10,40 +10,47 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
-<nav class="navbar navbar-inverse bg-primary" style="background-color: #2A3457;">
+<nav class="navbar navbar-inverse bg-primary" style="background-color: #800517;">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="/">DigiBank</a>
+
+			<a class="navbar-brand" href="">DigiBank</a>
+
 		</div>
-		<ul class="nav navbar-nav navbar-right">
-			{% if sessionid %}
-			<li class="dropdown">
-        		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
+		<ul class="nav navbar-nav">
+      		<li class="dropdown">
+        		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
         	<span class="caret"></span></a>
         	<ul class="dropdown-menu">
-          		<li><a href="{%url 'login:updateprofile'%}">Update Profile</a></li>
-         		 <li><a href="{% url 'login:changePass' %}">Change Password</a></li>
+          		<li><a href="#">Page 1-1</a></li>
+         		 <li><a href="#">Page 1-2</a></li>
           		<li><a href="#">Page 1-3</a></li>
         	</ul>
       		</li>
-			<li class="">
-					<a href="{% url 'login:logout'%}">
+     	</ul>
+		{% if empsession %}
+			<ul class="nav navbar-nav navbar-right">
+				<li class="">
+					<a href="{% url 'employee_site:empLogout' %}">
 						<span class="glyphicon glyphicon-log-out" aria-hideen="true"></span>&nbsp;
 						Logout
 					</a>
 				</li>
-			{% else %}
-			<li class="">
-					<a href="{% url 'login:login'%}">
+		</ul>
+		{% else %}
+		<ul class="nav navbar-nav navbar-right">
+				<li class="">
+					<a href="{% url 'employee_site:empLogin' %}">
 						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;
 						Login
 					</a>
-			</li>
-			{% endif %}
+				</li>
 		</ul>
+		{% endif %}
+
 	</div>
 </nav>
-<body class="bg">
+<body>
 {% block content %}
 {% endblock %}
 </body>

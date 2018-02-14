@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from customer_site.models import Customer
 from core_files.models import DDRequest, CheckRequest, Account
 from .forms import EmpAccActivation, EmpAccActivationSearch
+from .models import EmpDetail
 from django.shortcuts import render,redirect
 from ..customer_site.models import Customer
 from ..core_files.models import DDRequest, Account
@@ -11,11 +12,32 @@ from ..employee_site.forms import empFundsTransfer, empAccountSummary, empTransa
 
 # Create your views here.
 def empHome(request):
-    return render(request,'employee_site/home.html',{})
-
+    try:
+        employee= EmpDetail.objects.get(userid=request.session['empsession'])
+        return render(request,'employee_site/home.html',{'empsession':request.session['empsession'],'employee':employee})
+    except:
+        request.session['empsession']=""
+        return render(request, 'employee_site/home.html', {'empsession': request.session['empsession']})
 
 def empLogin(request):
-    return render(request, 'employee_site/login.html',{})
+    return render(request,'employee_site/login.html',{})
+
+def auth(request):
+    userid= request.POST['userid']
+    password=request.POST['password']
+    try:
+        emp = EmpDetail.objects.get(userid=userid,password=password)
+        request.session['empsession']= emp.userid
+        return redirect('employee_site:empHome')
+    except:
+        return redirect({'employee_site:empLogin'})
+
+def empLogout(request):
+    try:
+        del request.session['empsession']
+    except KeyError:
+        pass
+    return redirect('employee_site:empHome')
 
 
 def emp_account_act(request, pk=-1):
@@ -76,6 +98,7 @@ def emp_dd_req(request, pk=-1):
         dd_req.approved = True
         dd_req.save()
         return redirect("/employee/dd_req/")
+
 
 def emp_checks(request, pk=-1):
     check_requests = CheckRequest.objects.filter(approved=False)
