@@ -1,5 +1,6 @@
 from django.db import models
 from customer_site.models import Customer
+from django.utils import timezone
 
 
 # Create your models here.
@@ -13,11 +14,13 @@ class DDRequest(models.Model):
     address_state = models.CharField(max_length=100)
     address_zip = models.IntegerField()
     rec_phone = models.IntegerField()
-    send_date = models.DateField()
-    payable_date = models.DateField()
+    send_date = models.DateField(default=timezone.now)
+    payable_date = models.DateField(default=timezone.now)
     message = models.CharField(max_length=240)
     approved = models.BooleanField(default=False)
 
+    def __str__(self):
+        return str(self.requester) + ": " + str(self.amount)
 
 class CheckRequest(models.Model):
     account = models.ForeignKey("Account",
@@ -26,6 +29,10 @@ class CheckRequest(models.Model):
     address_city = models.CharField(max_length=100)
     address_state = models.CharField(max_length=100)
     address_zip = models.IntegerField()
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.account)
 
 
 class Account(models.Model):
@@ -38,7 +45,7 @@ class Account(models.Model):
                               on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.owner
+        return str(self.owner)
 
 
 class Transaction(models.Model):
