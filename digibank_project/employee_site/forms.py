@@ -1,4 +1,6 @@
 from django import forms
+from django import forms
+from core_files.models import Account
 
 
 class EmpDDRequestForm(forms.BaseForm):
@@ -19,3 +21,20 @@ class EmpAccActivationSearch(forms.Form):
 class EmpAccActivation(forms.ModelForm):
     class Meta:
         fields = ["active"]
+
+class userAccountSummary(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('owner', 'accountNum', 'acntType')
+
+
+class userTransactionReport(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('owner','accountNum', 'acntType',)
+
+
+class userFundsTransfer(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('accountNum', 'routingNum','owner')

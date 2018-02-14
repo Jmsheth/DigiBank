@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .models import Customer
 from _overlapped import NULL
 from django.template.context_processors import request
+from core_files.models import Account
+from django.views.generic import CreateView
+from .forms import userTransactionReport,userFundsTransfer,userAccountSummary
 
 # Create your views here.
 def home(request):
@@ -104,3 +107,40 @@ def updateauth(request):
         return redirect('login:cusHome')
     except:
         return redirect('login:updateprofile')
+
+
+class userAccountSummary_vw(CreateView):
+    model = Account
+    template_name = 'UserAccount/AccountSummary.html'
+    form_class = userAccountSummary
+
+    def form_valid(self, form):
+        if form.is_valid():
+            uAcntSmry = form.save(commit=False)
+            return super(userAccountSummary_vw,self).form_valid(form)
+
+
+class userTransactionReport_vw(CreateView):
+    model = Account
+    template_name = 'UserAccount/TxnReport.html'
+    form_class = userTransactionReport
+
+    def form_valid(self, form):
+        if form.is_valid():
+            utrxnSmry = form.save(commit=False)
+            return super(userTransactionReport_vw,self).form_valid(form)
+
+
+class userFundsTransfer_vw(CreateView):
+    model = Account
+    template_name = 'UserAccount/FundsTransfr.html'
+    form_class = userFundsTransfer
+
+    def form_valid(self, form):
+        if form.is_valid():
+            uTrsfr = form.save(commit=False)
+            return super(userFundsTransfer_vw,self).form_valid(form)
+#
+# def acntSmryDsply(request):
+#     customer = Customer.objects.get(userid=request.session['sessionid'])
+#     return render(request, 'UserAccount/acntSmryDsply.html', {'sessionid': request.session['sessionid'], "customer": customer})
