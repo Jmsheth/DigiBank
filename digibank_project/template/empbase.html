@@ -10,7 +10,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
-<nav class="navbar navbar-inverse bg-primary" style="background-color: #B40404;">
+<nav class="navbar navbar-inverse bg-primary" style="background-color: #800517;">
 	<div class="container-fluid">
 		<div class="navbar-header">
 
@@ -28,15 +28,26 @@
         	</ul>
       		</li>
      	</ul>
-
+		{% if empsession %}
+			<ul class="nav navbar-nav navbar-right">
+				<li class="">
+					<a href="{% url 'employee_site:empLogout' %}">
+						<span class="glyphicon glyphicon-log-out" aria-hideen="true"></span>&nbsp;
+						Logout
+					</a>
+				</li>
+		</ul>
+		{% else %}
 		<ul class="nav navbar-nav navbar-right">
 				<li class="">
-					<a href="login/">
+					<a href="{% url 'employee_site:empLogin' %}">
 						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;
 						Login
 					</a>
 				</li>
 		</ul>
+		{% endif %}
+
 	</div>
 </nav>
 <body>
