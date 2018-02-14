@@ -3,11 +3,6 @@ from customer_site.models import Customer
 from core_files.models import DDRequest, CheckRequest, Account
 from .forms import EmpAccActivation, EmpAccActivationSearch
 from .models import EmpDetail
-from django.shortcuts import render,redirect
-from ..customer_site.models import Customer
-from ..core_files.models import DDRequest, Account
-from django.views.generic import CreateView
-from ..employee_site.forms import empFundsTransfer, empAccountSummary, empTransactionReport
 
 
 # Create your views here.
@@ -39,6 +34,33 @@ def empLogout(request):
         pass
     return redirect('employee_site:empHome')
 
+def forgotpass(request):
+    return render(request,'employee_site/forgot.html',{})
+
+def reset(request):
+
+    try:
+        emp = EmpDetail.objects.get(emailAdd=request.POST["email"],empId=request.POST["idnum"])
+        if emp is not None:
+            global user
+            user = emp.userid
+            return redirect('employee_site:resetpassword')
+    except:
+        return redirect('employee_site:forgot')
+
+def resetpassword(request):
+    return render(request,'employee_site/reset.html',{})
+
+def resetauth(request):
+    try:
+        if request.POST['pwd1']==request.POST['pwd2']:
+            print("match")
+            print(user)
+            EmpDetail.objects.filter(userid=user).update(password=request.POST['pwd2'])
+            print("update")
+            return redirect('employee_site:empHome')
+    except:
+        return redirect('employee_site:reset')
 
 def emp_account_act(request, pk=-1):
     form = EmpAccActivationSearch()
@@ -119,46 +141,4 @@ def emp_checks(request, pk=-1):
         check_req.approved = not check_req.approved
         check_req.save()
         return redirect("/employee/check_req/")
-
-
-
-class empAccountSummary_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/AccountSummary.html'
-    form_class = empAccountSummary
-
-    def form_valid(self, form):
-        if form.is_valid():
-            utrxnSmry = form.save(commit=False)
-            return super(empAccountSummary_vw,self).form_valid(form)
-
-    # def form_valid(self, form):
-    #     instance = Account.objects.get(id=id)
-    #     form = userAccountSummary(request.POST or None,instance=instance)
-    #     if form.is_valid():
-    #         uTrsfr = form.save(commit=False)
-    #         return super(userFundsTransfer_vw,self).form_valid(form)
-    #         form.save()
-    #         return redirect("edit")
-    #     return render(request,'UserAccount/AccountSummary.html',{'form':form})
-
-#
-class empTransactionReport_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/TxnReport.html'
-    form_class = empTransactionReport
-
-    def form_valid(self, form):
-        if form.is_valid():
-            utrxnSmry = form.save(commit=False)
-            return super(empTransactionReport_vw,self).form_valid(form)
-
-
-
-#
-#
-#
-
-
-
 

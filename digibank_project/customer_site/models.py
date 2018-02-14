@@ -20,9 +20,4 @@ class Customer(models.Model):
     active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.firstName
-
-
-
-
-
+        return self.userid
