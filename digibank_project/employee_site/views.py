@@ -27,7 +27,7 @@ def auth(request):
         request.session['empsession']= emp.userid
         return redirect('employee_site:empHome')
     except:
-        return redirect({'employee_site:empLogin'})
+        return redirect('employee_site:empLogin')
 
 def empLogout(request):
     try:
@@ -64,6 +64,12 @@ def resetauth(request):
     except:
         return redirect('employee_site:reset')
 
+def newCustomer(request):
+    if request.session['empsession'] is not "":
+        print("this",request.session['empsession'],"is")
+        return render(request,'employee_site/newcustomer.html',{'empsession': request.session['empsession']})
+    else:
+        return redirect('employee_site:empHome')
 def emp_account_act(request, pk=-1):
     form = EmpAccActivationSearch()
     if request.method == "GET":
@@ -164,7 +170,8 @@ def authEmpAccountdetails(request):
         # print(acc)
         return render(request, 'EmpAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
     except:
-        ...
+        return redirect('employee_site:empHome')
+
 
 
 def empTransactionReport(request):
@@ -191,5 +198,5 @@ def authEmpReportdetails(request):
         print("This is", txnCr)
         return render(request, 'EmpAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
     except:
-        ...
+        return redirect('employee_site:empHome')
 
