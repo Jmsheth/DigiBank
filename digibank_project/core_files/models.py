@@ -48,9 +48,9 @@ class Account(models.Model):
         return str(self.accountNum)
 
 
-class Transaction(models.Model):
+class Transactions(models.Model):
     # Transaction Model included by<kashif> to utilize Transaction details
-    accntTo = models.CharField(max_length=15, null=False)
+    accntTo = models.IntegerField(null=False)
     accntFrom = models.ForeignKey(Account, null=False,
                                   on_delete=models.CASCADE)
     dateTime = models.DateTimeField(null=False)

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Customer
 from _overlapped import NULL
 from django.template.context_processors import request
-from core_files.models import Account
+from core_files.models import Account,Transactions
 from django.views.generic import CreateView
 from .forms import userTransactionReport,userFundsTransfer,userAccountSummary
 
@@ -112,42 +112,65 @@ def updateauth(request):
 def userAccountSummary(request):
     customer = Customer.objects.get(userid=request.session['sessionid'])
     cid = customer.id
-    print(customer)
-    print(cid)
+    # print(customer)
+    # print(cid)
     account = Account.objects.filter(owner_id=cid)
-    print(account)
+    # print(account)
 
     return render(request,'UserAccount/AccountSummary.html',
                   {'sessionid':request.session['sessionid'],'account':account,'customer':customer})
-    # model = Account
-    # template_name = 'UserAccount/AccountSummary.html'
-    # form_class = userAccountSummary
-    # cus = Customer.objects.get(userid=request.session['sessionid'])
-    # def form_valid(self, form):
-    #     if form.is_valid():
-    #         uAcntSmry = form.save(commit=False)
-    #         return render(request,'UserAccount/AccountSummary.html', {'sessionid':request.session['sessionid'],'customer':cus})
-    #         #return super(userAccountSummary_vw,self).form_valid(form)
 
 def authdetails(request):
+    try:
+        # print("Inside")
+        accnum = request.POST['accnum']
+        # print("This is ",accnum)
+        acc = Account.objects.get(accountNum=accnum)
+        # print(acc)
+        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+    except:
+        ...
+
+
+def userTransactionReport(request):
+    customer = Customer.objects.get(userid=request.session['sessionid'])
+    cid = customer.id
+    # print(customer)
+    # print(cid)
+    account = Account.objects.filter(owner_id=cid)
+    # txnDebit = Transaction.objects.filter(accntTo=account)
+    # txnCredit= Transaction.objects.filter(accntFrom=account)
+    # print(account)
+
+    return render(request, 'UserAccount/TxnReport.html',
+                  {'sessionid': request.session['sessionid'], 'account': account,'customer': customer})
+                   # 'customer': customer,'txnDebit': txnDebit,'txnCredit': txnCredit})
+
+
+def authReportdetails(request):
     try:
         print("Inside")
         accnum = request.POST['accnum']
         print("This is ",accnum)
-        acc = Account.objects.get(accountNum=accnum)
-        print(acc)
-        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+        txnCr = Transactions.objects.filter(accntFrom=accnum)
+        txnDb = Transactions.objects.filter(accnTo=accnum)
+        print(txnDb,txnCr)
+        return render(request, 'UserAccount/displayTxndetails.html',
+                      {'sessionid': request.session['sessionid'], 'txnCr': txnCr,'txnDb': txnDb})
     except:
         ...
-class userTransactionReport_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/TxnReport.html'
-    form_class = userTransactionReport
 
-    def form_valid(self, form):
-        if form.is_valid():
-            utrxnSmry = form.save(commit=False)
-            return super(userTransactionReport_vw,self).form_valid(form)
+
+
+# class userTransactionReport_vw(CreateView):
+#     model = Account
+#     template_name = 'UserAccount/TxnReport.html'
+#     form_class = userTransactionReport
+#
+#     def form_valid(self, form):
+#         if form.is_valid():
+#             utrxnSmry = form.save(commit=False)
+#             return super(userTransactionReport_vw,self).form_valid(form)
 
 
 class userFundsTransfer_vw(CreateView):

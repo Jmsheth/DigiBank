@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2> Customer Transaction Report </h2>
+<form method = "POST" class="myc">
+ {% csrf_token %}
+    <table>
+        <tr>
+                    {% for i in txnCr %}
+                        <td><b>Transaction From Account</b></td>
+                                {{ i.accntFrom }}
+                        <td><b> Transaction To Account</b></td>
+                                {{ i.accnTo }}
+                        <td><b> Transaction Date Time </b></td>
+                                {{ i.dateTime }}
+                        <td><b> Transaction Amount</b></td>
+                                {{ i.amount }}
+                    {% endfor %}
+        <tr/>
+                <tr>
+                    {% for i in txnDb %}
+                        <td><b>Transaction From Account</b></td>
+                                {{ i.accntFrom }}
+                        <td><b> Transaction To Account</b></td>
+                                {{ i.accnTo }}
+                        <td><b> Transaction Date Time </b></td>
+                                {{ i.dateTime }}
+                        <td><b> Transaction Amount</b></td>
+                                {{ i.amount }}
+                    {% endfor %}
+        <tr/>
+    </table>
+
+</form>

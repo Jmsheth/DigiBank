@@ -19,6 +19,7 @@ urlpatterns = [
     path('updateauth/',views.updateauth, name='updateauth'),
     path('userAccountSummary/', views.userAccountSummary, name='userAccountSummary'),
     path('authsummary/', views.authdetails, name='viewdetails'),
-    path('userTransactionReport/', views.userTransactionReport_vw.as_view(), name='userTransactionReport'),
+    path('userTransactionReport/', views.userTransactionReport, name='userTransactionReport'),
+    path('authtxnreport/', views.authReportdetails, name='viewReport'),
     path('userFundsTransfer/', views.userFundsTransfer_vw.as_view(), name='userFundsTransfer'),
 ]
