@@ -21,7 +21,9 @@ urlpatterns = [
     path('authsummary/', views.authdetails, name='viewdetails'),
     path('userTransactionReport/', views.userTransactionReport, name='userTransactionReport'),
     path('authtxnreport/', views.authReportdetails, name='viewreport'),
-    path('userFundsTransfer/', views.userFundsTransfer_vw.as_view(), name='userFundsTransfer'),
+
+    path('userFundsTransfer/', views.userFundsTransfer, name='userFundsTransfer'),
+    path('authFundsTrsfrDtls/', views.authFundTrsfrDetails, name='viewFundsTrsfrdetails'),
     # URLS for Changes included by <kashif>
     path('userAccountSummary', views.userAccountSummary, name='userAccountSummary'),
     path("request_checks/",
