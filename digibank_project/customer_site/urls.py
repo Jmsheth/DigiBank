@@ -19,4 +19,10 @@ urlpatterns = [
     path('updateauth/',views.updateauth, name='updateauth'),
     # URLS for Changes included by <kashif>
     path('userAccountSummary', views.userAccountSummary, name='userAccountSummary'),
+    path("request_checks/",
+         views.user_check_req,
+         name="Check Request"),
+    path("dd_req/",
+         views.user_dd_req,
+         name="DD Request")
 ]

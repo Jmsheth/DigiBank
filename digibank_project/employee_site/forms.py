@@ -1,10 +1,6 @@
 from django import forms
 
 
-class EmpDDRequestForm(forms.BaseForm):
-    pass
-
-
 class EmpAccActivationSearch(forms.Form):
     f_name = forms.CharField(label="First name:",
                              required=False)
@@ -14,8 +10,3 @@ class EmpAccActivationSearch(forms.Form):
                              required=False)
     id_num = forms.IntegerField(label="ID Number:",
                                  required=False)
-
-
-class EmpAccActivation(forms.ModelForm):
-    class Meta:
-        fields = ["active"]

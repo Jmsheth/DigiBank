@@ -17,6 +17,8 @@ class DDRequest(models.Model):
     send_date = models.DateField(default=timezone.now)
     payable_date = models.DateField(default=timezone.now)
     message = models.CharField(max_length=240)
+    account_from = models.ForeignKey("Account",
+                                     on_delete=models.DO_NOTHING)
     approved = models.BooleanField(default=False)
 
     def __str__(self):

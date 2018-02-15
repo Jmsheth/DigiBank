@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from .models import Customer
+from core_files.models import Account, CheckRequest, DDRequest
 from _overlapped import NULL
 from django.template.context_processors import request
 
@@ -104,3 +106,60 @@ def updateauth(request):
         return redirect('login:cusHome')
     except:
         return redirect('login:updateprofile')
+
+
+def user_dd_req(request):
+    if request.method == "GET":
+        user = Customer.objects.get(
+            userid=request.session["sessionid"])
+        accounts = Account.objects.filter(owner_id=user.id)
+        return render(request,
+                      "customer_site/user_dd_req.html",
+                      {"user": user,
+                       "accounts": accounts})
+    if request.method == "POST":
+        dd_req = DDRequest()
+        dd_req.rec_name = request.POST["rec_name"]
+        dd_req.amount = request.POST["amount"]
+        dd_req.address_st = request.POST["address_st"]
+        dd_req.address_city = request.POST["address_city"]
+        dd_req.address_state = request.POST["address_state"]
+        dd_req.address_zip = request.POST["address_zip"]
+        dd_req.rec_phone = request.POST["rec_phone"]
+        dd_req.payable_date = request.POST["payable_date"]
+        dd_req.message = request.POST["message"]
+        dd_req.requester = Customer.objects.get(
+            userid=request.session["sessionid"])
+        dd_req.send_date = request.POST["send_date"]
+        dd_req.account_from = Account.objects.get(
+            pk=request.POST["account_from"]
+        )
+        if not dd_req.save():
+            return redirect("login:cusHome")
+        else:
+            messages.info(request, "Unable to store data.")
+            return redirect("/dd_request/")
+
+
+def user_check_req(request):
+    if request.method == "GET":
+        user = Customer.objects.get(userid=request.session["sessionid"])
+        accounts = Account.objects.filter(owner_id=user.id)
+        return render(request,
+                      "customer_site/user_check_request.html",
+                      {"user": user,
+                       "accounts": accounts})
+    if request.method == "POST":
+        print(request.POST)
+        check_req = CheckRequest()
+        check_req.address_st = request.POST["address_st"]
+        check_req.address_city = request.POST["address_city"]
+        check_req.address_state = request.POST["address_state"]
+        check_req.address_zip = request.POST["address_zip"]
+        check_req.account = Account.objects.get(
+            pk=request.POST["account_id"])
+        if not check_req.save():
+            return redirect("login:cusHome")
+        else:
+            messages.info(request, "Unable to store data.")
+            return redirect("/request_checks/")
