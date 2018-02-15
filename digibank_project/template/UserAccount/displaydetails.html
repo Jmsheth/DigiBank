@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2> Customer Account Summary </h2>
+<form method = "POST" class="myc">
+ {% csrf_token %}
+    <table>
+        <tr>
+            <td><b>Account Number</b></td>
+            <td><b>{{ acc.accountNum }}</b></td>
+        <tr/>
+        <tr>
+            <td>Account Type</td>
+            <td>
+                {{ acc.acntType }}
+            </td>
+        </tr>
+        <tr>
+            <td>Balance</td>
+            <td>
+                {{ acc.balance }}
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+
+{% endblock %}

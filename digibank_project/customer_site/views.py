@@ -90,8 +90,8 @@ def logout(request):
         pass
     return redirect('login:cusHome')
 
-def userAccountSummary(request):
-    pass
+# def userAccountSummary(request):
+#     pass
 
 def updateprofile(request):
     customer = Customer.objects.get(userid=request.session['sessionid'])
@@ -109,17 +109,36 @@ def updateauth(request):
         return redirect('login:updateprofile')
 
 
-class userAccountSummary_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/AccountSummary.html'
-    form_class = userAccountSummary
+def userAccountSummary(request):
+    customer = Customer.objects.get(userid=request.session['sessionid'])
+    cid = customer.id
+    print(customer)
+    print(cid)
+    account = Account.objects.filter(owner_id=cid)
+    print(account)
 
-    def form_valid(self, form):
-        if form.is_valid():
-            uAcntSmry = form.save(commit=False)
-            return super(userAccountSummary_vw,self).form_valid(form)
+    return render(request,'UserAccount/AccountSummary.html',
+                  {'sessionid':request.session['sessionid'],'account':account,'customer':customer})
+    # model = Account
+    # template_name = 'UserAccount/AccountSummary.html'
+    # form_class = userAccountSummary
+    # cus = Customer.objects.get(userid=request.session['sessionid'])
+    # def form_valid(self, form):
+    #     if form.is_valid():
+    #         uAcntSmry = form.save(commit=False)
+    #         return render(request,'UserAccount/AccountSummary.html', {'sessionid':request.session['sessionid'],'customer':cus})
+    #         #return super(userAccountSummary_vw,self).form_valid(form)
 
-
+def authdetails(request):
+    try:
+        print("Inside")
+        accnum = request.POST['accnum']
+        print("This is ",accnum)
+        acc = Account.objects.get(accountNum=accnum)
+        print(acc)
+        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+    except:
+        ...
 class userTransactionReport_vw(CreateView):
     model = Account
     template_name = 'UserAccount/TxnReport.html'

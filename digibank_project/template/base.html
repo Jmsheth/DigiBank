@@ -15,8 +15,15 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="/">DigiBank</a>
 		</div>
+		{% if sessionid %}
+		<ul class="nav navbar-nav">
+				<li>
+					<a href="{% url 'login:userAccountSummary' %}">
+						Account Summary
+					</a>
+				</li>
+			</ul>
 		<ul class="nav navbar-nav navbar-right">
-			{% if sessionid %}
 			<li class="dropdown">
         		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
         	<span class="caret"></span></a>

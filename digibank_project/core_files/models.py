@@ -45,7 +45,7 @@ class Account(models.Model):
                               on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.owner)
+        return str(self.accountNum)
 
 
 class Transaction(models.Model):

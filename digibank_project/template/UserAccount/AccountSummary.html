@@ -1,24 +1,34 @@
 
 {% extends 'base.html' %}
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 {% block content %}
 <h2> Customer Account Summary </h2>
-<form method = "POST" class="myc">
+<form method = "post" class="" action="{% url 'login:viewdetails'%}">
  {% csrf_token %}
     <table>
         <tr>
-            {{ form.as_table }}
+            <td><b>Owner</b></td>
+            <td><b>{{ customer.firstName }}</b></td>
         <tr/>
         <tr>
+            <td><b>Account Number</b></td>
+            <td>
+                <select name='accnum'>
+                    {% for i in account %}
+                    <option>
+                            {{ i.accountNum }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td><b>Date From:</b></td>
-            <td><input type="date" name="mydate"></td>
+            <td><input type="date" name="fromdate"></td>
         </tr>
 
         <tr>
             <td><b>Date To:  </b></td>
-            <td><input type="date" name="mydate"></td>
+            <td><input type="date" name="todate"></td>
         </tr>
     </table>
     <button type = "submit"> View Details </button>
