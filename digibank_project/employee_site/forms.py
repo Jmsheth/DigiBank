@@ -1,10 +1,4 @@
 from django import forms
-from django import forms
-from core_files.models import Account
-
-
-class EmpDDRequestForm(forms.BaseForm):
-    pass
 
 
 class EmpAccActivationSearch(forms.Form):
@@ -16,25 +10,3 @@ class EmpAccActivationSearch(forms.Form):
                              required=False)
     id_num = forms.IntegerField(label="ID Number:",
                                  required=False)
-
-
-class EmpAccActivation(forms.ModelForm):
-    class Meta:
-        fields = ["active"]
-
-class userAccountSummary(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ('owner', 'accountNum', 'acntType')
-
-
-class userTransactionReport(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ('owner','accountNum', 'acntType',)
-
-
-class userFundsTransfer(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ('accountNum', 'routingNum','owner')

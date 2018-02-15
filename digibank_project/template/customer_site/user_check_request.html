@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div id="user_details" align="center">
+    <p>
+        {{ user.firstName }} {{ user.lastName }},<br/>
+        {{ user.userid }}
+    </p>
+</div>
+<div id="forms_left"
+     style="float: left;
+            width: 50%;
+            overflow: auto;">
+    <fieldset>
+        <legend>Check Request</legend>
+        <form name="whereto" method="post">
+            {% csrf_token %}
+            <table align="center">
+                <tr>
+                    <td>Select Account:</td>
+                    <td>
+                        <select name="account_id">
+                            {% for acc in accounts %}
+                            <option value="{{ acc.id }}">
+                                <strong>{{ acc.acntType }}</strong> - <kbd>{{ acc.accountNum }}</kbd>
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Street:</td>
+                    <td><input type="text"
+                               name="address_st"
+                               value="{{ user.address }}"></td>
+                </tr>
+                <tr>
+                    <td>City:</td>
+                    <td><input type="text"
+                               name="address_city"
+                               value="{{ user.city }}"></td>
+                </tr>
+                <tr>
+                    <td>State:</td>
+                    <td><input type="text"
+                               name="address_state"
+                               value="{{ user.state }}"></td>
+                </tr>
+                <tr>
+                    <td>Zip Code:</td>
+                    <td><input type="text"
+                               name="address_zip"
+                               value="{{ user.zipCode }}"></td>
+                </tr>
+            </table>
+            <small>*This address is where the checks should be sent to.</small><br/>
+            <input type="submit" value="Confirm">
+        </form>
+    </fieldset>
+</div>
+<div id="details_right"
+     style="float: right;
+            width: 50%;
+            overflow: auto;"
+     align="center">
+    {% for acc in accounts %}
+        <section>
+            <strong>{{ acc.acntType }}</strong> - <kbd>{{ acc.accountNum }}</kbd><br/>
+            <table>
+                <tr>
+                    <td>Routing Number:</td>
+                    <td>{{ acc.routingNum }}</td>
+                </tr>
+                <tr>
+                    <td>Balance:</td>
+                    <td>${{ acc.balance }}</td>
+                </tr>
+            </table>
+        </section>
+    {% endfor %}
+
+</div>
+{% endblock %}

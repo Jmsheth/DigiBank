@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form method="post">
+    <fieldset>
+        <legend>Your Information</legend>
+        <table>
+            <tr>
+                <td>Account:</td>
+                <td><select>
+                    {% for acc in accounts %}
+                    <option value="{{ acc.id }}">
+                        <strong>{{ acc.acntType }}</strong> - <kbd>{{ acc.accountNum }}</kbd>
+                    </option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>Amount:</td>
+                <td><input type="number" name="amount"></td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend align="center">Recipient Information</legend>
+        <table align="center">
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="rec_name"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+            </tr>
+            <tr>
+                <td>Street:</td>
+                <td><input type="text" name="address_st"></td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><input type="text" name="address_city"></td>
+            </tr>
+            <tr>
+                <td>State:</td>
+                <td><input type="text" name="address_state"></td>
+            </tr>
+            <tr>
+                <td>Zip Code:</td>
+                <td><input type="text" name="address_zip"></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><input type="tel" name="rec_phone"></td>
+            </tr>
+            <tr>
+                <td>Date Payable:</td>
+                <td><input type="date" name="payable_date"></td>
+            </tr>
+            <tr>
+                <td>Send Date:</td>
+                <td><input type="date" name="send_date"></td>
+            </tr>
+            <tr>
+                <td>Message:</td>
+                <td><textarea required rows="5"></textarea></td>
+            </tr>
+        </table>
+
+    </fieldset>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from customer_site.models import Customer
 from core_files.models import DDRequest, CheckRequest, Account
-from .forms import EmpAccActivation, EmpAccActivationSearch,userAccountSummary,userFundsTransfer,userTransactionReport
+from .forms import EmpAccActivationSearch
 from .models import EmpDetail
 from core_files.models import Account
 from django.views.generic import CreateView
