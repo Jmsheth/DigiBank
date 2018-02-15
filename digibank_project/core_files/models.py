@@ -57,6 +57,5 @@ class Transactions(models.Model):
     amount = models.FloatField(max_length=15)
 
     def __str__(self):
-        return self.accntFrom.accountNum \
-               + " to " + self.accntTo
+        return str(self.accntFrom) + " to " + str(self.accntTo)
 

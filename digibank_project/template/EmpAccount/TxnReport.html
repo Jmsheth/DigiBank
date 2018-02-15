@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'empbase.html' %}
 {% block content %}
 <h2> Customer Transaction Report </h2>
-<form method = "post" class="" action="{% url 'login:viewreport'%}">
+<form method = "post" class="" action="{% url 'login:empviewreport'%}">
  {% csrf_token %}
     <table>
         <tr>

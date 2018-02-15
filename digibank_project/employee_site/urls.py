@@ -29,5 +29,9 @@ urlpatterns = [
          name="Check Requests"),
     path("check_req/<int:pk>/",
          views.emp_checks,
-         name="Check Requests")
+         name="Check Requests"),
+    path('empAccountSummary/', views.empAccountSummary, name='empAccountSummary'),
+    path('authEmpsummary/', views.authEmpAccountdetails, name='empviewdetails'),
+    path('empTransactionReport/', views.empTransactionReport, name='empTransactionReport'),
+    path('authEmptxnreport/', views.authEmpReportdetails, name='empviewreport'),
 ]

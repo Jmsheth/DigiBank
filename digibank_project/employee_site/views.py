@@ -144,40 +144,52 @@ def emp_checks(request, pk=-1):
         check_req.save()
         return redirect("/employee/check_req/")
 
-
-class userAccountSummary_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/AccountSummary.html'
-    form_class = userAccountSummary
-
-    def form_valid(self, form):
-        if form.is_valid():
-            uAcntSmry = form.save(commit=False)
-            return super(userAccountSummary_vw,self).form_valid(form)
-
-
-class userTransactionReport_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/TxnReport.html'
-    form_class = userTransactionReport
-
-    def form_valid(self, form):
-        if form.is_valid():
-            utrxnSmry = form.save(commit=False)
-            return super(userTransactionReport_vw,self).form_valid(form)
-
-
-class userFundsTransfer_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/FundsTransfr.html'
-    form_class = userFundsTransfer
-
-    def form_valid(self, form):
-        if form.is_valid():
-            uTrsfr = form.save(commit=False)
-            return super(userFundsTransfer_vw,self).form_valid(form)
-
-def acntSmryDsply(request):
+def empAccountSummary(request):
     customer = Customer.objects.get(userid=request.session['sessionid'])
-    return render(request, 'UserAccount/acntSmryDsply.html', {'sessionid': request.session['sessionid'], "customer": customer})
+    cid = customer.id
+    # print(customer)
+    # print(cid)
+    account = Account.objects.filter(owner_id=cid)
+    # print(account)
+
+    return render(request,'EmpAccount/AccountSummary.html',
+                  {'sessionid':request.session['sessionid'],'account':account,'customer':customer})
+
+def authEmpAccountdetails(request):
+    try:
+        # print("Inside")
+        accnum = request.POST['accnum']
+        # print("This is ",accnum)
+        acc = Account.objects.get(accountNum=accnum)
+        # print(acc)
+        return render(request, 'EmpAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+    except:
+        ...
+
+
+def empTransactionReport(request):
+    customer = Customer.objects.get(userid=request.session['sessionid'])
+    cid = customer.id
+    # print(customer)
+    # print(cid)
+    account = Account.objects.filter(owner_id=cid)
+
+
+    return render(request, 'EmpAccount/TxnReport.html',
+                  {'sessionid': request.session['sessionid'], 'account': account,'customer': customer})
+
+
+def authEmpReportdetails(request):
+    try:
+        print("Inside")
+        accnum = request.POST['accnum']
+        print("This is ",accnum)
+        txnCr = Transactions.objects.filter(accntFrom=accnum)
+        txnDb = Transactions.objects.filter(accntTo=accnum)
+        print("Here")
+        print("This is",txnDb)
+        print("This is", txnCr)
+        return render(request, 'EmpAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
+    except:
+        ...
 

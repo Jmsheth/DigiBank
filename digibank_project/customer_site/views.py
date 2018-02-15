@@ -138,13 +138,10 @@ def userTransactionReport(request):
     # print(customer)
     # print(cid)
     account = Account.objects.filter(owner_id=cid)
-    # txnDebit = Transaction.objects.filter(accntTo=account)
-    # txnCredit= Transaction.objects.filter(accntFrom=account)
-    # print(account)
+
 
     return render(request, 'UserAccount/TxnReport.html',
                   {'sessionid': request.session['sessionid'], 'account': account,'customer': customer})
-                   # 'customer': customer,'txnDebit': txnDebit,'txnCredit': txnCredit})
 
 
 def authReportdetails(request):
@@ -153,25 +150,13 @@ def authReportdetails(request):
         accnum = request.POST['accnum']
         print("This is ",accnum)
         txnCr = Transactions.objects.filter(accntFrom=accnum)
-        txnDb = Transactions.objects.filter(accnTo=accnum)
-        print(txnDb,txnCr)
-        return render(request, 'UserAccount/displayTxndetails.html',
-                      {'sessionid': request.session['sessionid'], 'txnCr': txnCr,'txnDb': txnDb})
+        txnDb = Transactions.objects.filter(accntTo=accnum)
+        print("Here")
+        print("This is",txnDb)
+        print("This is", txnCr)
+        return render(request, 'UserAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
     except:
         ...
-
-
-
-# class userTransactionReport_vw(CreateView):
-#     model = Account
-#     template_name = 'UserAccount/TxnReport.html'
-#     form_class = userTransactionReport
-#
-#     def form_valid(self, form):
-#         if form.is_valid():
-#             utrxnSmry = form.save(commit=False)
-#             return super(userTransactionReport_vw,self).form_valid(form)
-
 
 class userFundsTransfer_vw(CreateView):
     model = Account
@@ -182,7 +167,3 @@ class userFundsTransfer_vw(CreateView):
         if form.is_valid():
             uTrsfr = form.save(commit=False)
             return super(userFundsTransfer_vw,self).form_valid(form)
-#
-# def acntSmryDsply(request):
-#     customer = Customer.objects.get(userid=request.session['sessionid'])
-#     return render(request, 'UserAccount/acntSmryDsply.html', {'sessionid': request.session['sessionid'], "customer": customer})

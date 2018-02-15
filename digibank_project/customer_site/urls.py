@@ -20,6 +20,6 @@ urlpatterns = [
     path('userAccountSummary/', views.userAccountSummary, name='userAccountSummary'),
     path('authsummary/', views.authdetails, name='viewdetails'),
     path('userTransactionReport/', views.userTransactionReport, name='userTransactionReport'),
-    path('authtxnreport/', views.authReportdetails, name='viewReport'),
+    path('authtxnreport/', views.authReportdetails, name='viewreport'),
     path('userFundsTransfer/', views.userFundsTransfer_vw.as_view(), name='userFundsTransfer'),
 ]

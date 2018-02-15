@@ -1,0 +1,37 @@
+{% extends 'empbase.html' %}
+
+{% block content %}
+<h2> Customer Account Summary </h2>
+<form method = "POST" class="myc">
+ {% csrf_token %}
+    <table>
+        <tr>
+            <td><b>Account Number</b></td>
+            <td><b>{{ acc.accountNum }}</b></td>
+        <tr/>
+        <tr>
+            <td>
+
+                <b> Account Type </b>
+
+            </td>
+            <td>
+
+              <b> {{ acc.acntType }} </b>
+
+            </td>
+        </tr>
+        <tr>
+            <td><b> Balance </b></td>
+            <td>
+
+              <b>  {{ acc.balance }}  </b>
+
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+
+{% endblock %}
