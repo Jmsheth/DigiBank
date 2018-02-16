@@ -3,39 +3,40 @@
 {% block content %}
     <div id="req_list"
          align="justify"
-         style="float: left; width: 50%">
+         style="float: left; width: 34%">
         <form method="get">
-            <table align="center" class="btn-group-vertical btn-group-lg">
+                <h4 style="text-align:center;"><b>Select request to view:</b></h4>
+                <br>
+
             {% for req in check_requests %}
-                <tr>
-                    <td>
-                        <span class="">
-                        <BUTTON class="btn-block btn-default" type="submit"
-                                value="{{ req }}"
-                                formaction="/employee/check_req/{{ req.id }}/">
+
+                        <BUTTON class="btn-md btn-default col-xs-5" type="submit"
+                                value="{{ req.id }} - {{ req }}"
+                                formaction="/employee/check_req/{{ req.id }}/"
+                                style="margin-left:25%">
                             {{ req }}
                         </BUTTON>
-                        </span>
-                    </td>
-                </tr>
+
             {% endfor %}
-            </table>
+            </label>
         </form>
     </div>
     <div id="req_details"
-         style="float: right; width: 50%"
+         style="float: right; width: 66%"
          align="justify">
             <fieldset>
                 <legend>Request Details</legend>
+                <div style="margin-left:20%;">
                 <table>
                     <tr>
-                        <td>Request ID:</td>
-                        <td>{{ check_req.id }}</td>
+                        <td><b>Request ID:</b></td>
+                        <td style="margin-left:15%;">{{ check_req.id }}</td>
                     </tr>
                     <tr>
-                        <td>Address:</td>
+                        <td><b>Address:</b></td>
                         <td>{{ check_req.address_st }},</td>
                     </tr>
+
                     <tr>
                         <td></td>
                         <td>{{ check_req.address_city }},</td>
@@ -49,37 +50,48 @@
                         <td>{{ check_req.address_zip }}</td>
                     </tr>
                 </table>
+                </div>
+                <br>
                 <legend>Account Details</legend>
+                <div style="margin-left:20%;">
                 <table>
                     <tr>
-                        <td>Account Number:</td>
+                        <td><b>Account Number:</b></td>
                         <td>{{ acc.accountNum }}</td>
                     </tr>
                     <tr>
-                        <td>Routing Number:</td>
+                        <td><b>Routing Number:</b></td>
                         <td>{{ acc.routingNum }}</td>
                     </tr>
                     <tr>
-                        <td>Balance:</td>
+                        <td><b>Balance:</b></td>
                         <td>${{ acc.balance }}</td>
                     </tr>
                     <tr>
-                        <td>Account Type:</td>
+                        <td><b>Account Type:</b></td>
                         <td>{{ acc.acntType }}</td>
                     </tr>
                 </table>
+                </div>
             </fieldset>
+            <br>
             <fieldset>
                 <legend>Requested By:</legend>
-                {{ customer.firstName }}
-                {{ customer.lastName }} <br/>
+                <div style="margin-left:20%;">
+                <b>{{ customer.firstName }}
+                    {{ customer.lastName }}</b> <br/>
                 {{ customer.userid }}
+                </div>
             </fieldset>
+        <div style="margin-left:40%;">
         <form action="/employee/check_req/{{ check_req.id }}/" method="post">
             {% csrf_token %}
+
             <input type="submit"
                    value="Approve"
-                   class="btn-block btn-default"/>
-        </form>
+                   class="btn-lg btn-primary"/>
+
+            </form>
+        </div>
     </div>
 {% endblock %}

@@ -13,12 +13,13 @@
 {% endif %}
 
 <form method="post">
+    {% csrf_token %}
     <fieldset>
         <legend>Your Information</legend>
         <table>
             <tr>
                 <td>Account:</td>
-                <td><select>
+                <td><select name="account_from">
                     {% for acc in accounts %}
                     <option value="{{ acc.id }}">
                         <strong>{{ acc.acntType }}</strong> - <kbd>{{ acc.accountNum }}</kbd>
@@ -72,7 +73,7 @@
             </tr>
             <tr>
                 <td>Message:</td>
-                <td><textarea required rows="5"></textarea></td>
+                <td><textarea name="message"></textarea></td>
             </tr>
         </table>
 

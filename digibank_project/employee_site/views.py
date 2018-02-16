@@ -144,7 +144,8 @@ def emp_account_act(request, pk=-1):
         print("search button pressed")
         return render(request,
                       "employee_site/emp_acc_act.html",
-                      {"customers": customer_list,
+                      {"empsession": request.session['empsession'],
+                       "customers": customer_list,
                        "form": form})
     if request.method == "POST":
         # modify the account
@@ -179,7 +180,7 @@ def emp_dd_req(request, pk=-1):
     if request.method == "POST":
         dd_req.approved = True
         dd_req.save()
-        return redirect("/employee/dd_req/")
+        return redirect('employee_site:DD Requests')
 
 
 def emp_checks(request, pk=-1):
@@ -200,7 +201,9 @@ def emp_checks(request, pk=-1):
     if request.method == "GET":
         return render(request,
                       "employee_site/emp_check.html",
-                      {"check_requests": check_requests,
+                      {
+                       'empsession': request.session['empsession'],
+                       "check_requests": check_requests,
                        "check_req": check_req,
                        "customer": customer,
                        "acc": acc})
@@ -210,15 +213,12 @@ def emp_checks(request, pk=-1):
         return redirect("/employee/check_req/")
 
 def empAccountSummary(request):
-    employee = EmpDetail.objects.get(userid=request.session['empsession'])
-    #eid = employee.id
-    # print(customer)
-    # print(cid)
-    account = Account.objects.all()
-    print(account)
-
-    return render(request,'EmpAccount/AccountSummary.html',
-                  {'sessionid':request.session['empsession'],'account':account,'employee':employee})
+    if request.session['empsession'] is not "":
+        employee = EmpDetail.objects.get(userid=request.session['empsession'])
+        account = Account.objects.all()
+        return render(request,'EmpAccount/AccountSummary.html',{'empsession':request.session['empsession'],'account':account,'employee':employee})
+    else:
+        return redirect('employee_site:empHome')
 
 def authEmpAccountdetails(request):
     try:
@@ -234,16 +234,13 @@ def authEmpAccountdetails(request):
 
 
 def empTransactionReport(request):
-    employee = EmpDetail.objects.get(userid=request.session['empsession'])
-    # eid = EmpDetail.id
-    # print(customer)
-    # print(cid)
-    account = Account.objects.all()
-
-
-    return render(request, 'EmpAccount/TxnReport.html',
+    if request.session['empsession'] is not "":
+        employee = EmpDetail.objects.get(userid=request.session['empsession'])
+        account = Account.objects.all()
+        return render(request, 'EmpAccount/TxnReport.html',
                   {'empsession': request.session['empsession'], 'account': account,'employee':employee})
-
+    else:
+        return redirect('employee_site:empHome')
 
 def authEmpReportdetails(request):
     try:

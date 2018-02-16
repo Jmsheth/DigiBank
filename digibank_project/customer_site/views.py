@@ -246,9 +246,11 @@ def user_dd_req(request):
         accounts = Account.objects.filter(owner_id=user.id)
         return render(request,
                       "customer_site/user_dd_req.html",
-                      {"user": user,
+                      {'sessionid': request.session['sessionid'],
+                       "user": user,
                        "accounts": accounts})
     if request.method == "POST":
+        print(request.POST)
         dd_req = DDRequest()
         dd_req.rec_name = request.POST["rec_name"]
         dd_req.amount = request.POST["amount"]
@@ -258,16 +260,19 @@ def user_dd_req(request):
         dd_req.address_zip = request.POST["address_zip"]
         dd_req.rec_phone = request.POST["rec_phone"]
         dd_req.payable_date = request.POST["payable_date"]
+        print(request.POST["message"])
         dd_req.message = request.POST["message"]
+        print(request.session["sessionid"])
         dd_req.requester = Customer.objects.get(
             userid=request.session["sessionid"])
         dd_req.send_date = request.POST["send_date"]
         dd_req.account_from = Account.objects.get(
-            pk=request.POST["account_from"]
+            id=request.POST["account_from"]
         )
-        if not dd_req.save():
+        try:
+            dd_req.save()
             return redirect("login:cusHome")
-        else:
+        except:
             messages.info(request, "Unable to store data.")
             return redirect("/dd_request/")
 

@@ -1,84 +1,69 @@
 {% extends 'empbase.html' %}
 
 {% block content %}
-<h2> Customer Transaction Report </h2>
-<form method = "POST" class="myc">
- {% csrf_token %}
-    <h2>Debit Transaction</h2>
-    <div>
-    <table border="2">
-        <tr>
-
-                        <th><b>Transaction From Account</b></th>
-
-                        <th><b> Transaction To Account</b></th>
-
-                        <th><b> Transaction Date Time </b></th>
-
-                        <th><b> Transaction Amount</b></th>
-
-                        <th><b> Transaction Description</b></th>
 
 
+<div class="container">
+    <h1>Customer Transaction Report</h1>
+  	<hr>
 
-        </tr>
+    <h3>Debit Transaction</h3>
+    <div class="table-responsive" style="margin-left:12%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><b>Transaction From Account</b></th>
+                <th><b> Transaction To Account</b></th>
+                <th><b> Transaction Date Time </b></th>
+                <th><b> Transaction Amount</b></th>
+                <th><b> Transaction Description</b></th>
+            </tr>
+        </thead>
+        <tbody>
         {% for i in txnDb %}
          <tr>
-
                         <td><b>{{ i.accntFrom }}</b></td>
-
                         <td><b> {{ i.accntTo }}</b></td>
-
                         <td><b> {{ i.dateTime }} </b></td>
-
                         <td><b> {{ i.amount }}</b></td>
-
                         <td><b> {{ i.transferDesc }}</b></td>
-
-
-
-
         </tr>
          {% endfor %}
-    </table>
-    </div>
-     <h2>Credit Transaction</h2>
-        <div>
-    <table border="2">
+        </tbody>
+  </table>
+  </div>
+
+    <h3>Credit Transaction</h3>
+    <div class="table-responsive" style="margin-left:12%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><b>Transaction From Account</b></th>
+                <th><b> Transaction To Account</b></th>
+                <th><b> Transaction Date Time </b></th>
+                <th><b> Transaction Amount</b></th>
+                <th><b> Transaction Description</b></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for k in txnCr %}
         <tr>
-                        <th><b>Transaction From Account</b></th>
-
-                        <th><b> Transaction To Account</b></th>
-
-                        <th><b> Transaction Date Time </b></th>
-
-                        <th><b> Transaction Amount</b></th>
-
-                        <th><b> Transaction Description</b></th>
-
-
-        </tr>
-         {% for k in txnCr %}
-        <tr>
-
                         <td><b>{{ k.accntFrom }}</b></td>
-
                         <td><b> {{ k.accntTo }}</b></td>
-
                         <td><b>  {{ k.dateTime }} </b></td>
-
                         <td><b> {{ k.amount }}</b></td>
-
                         <td><b> {{ k.transferDesc }}</b></td>
-
-
         </tr>
             {% endfor %}
-
-    </table>
-</div>
-<a href = "{% url 'employee_site:empTransactionReport'%}"> Back </a>
-
-
+        </tbody>
+  </table>
+  </div>
+    <a href = "{% url 'employee_site:empTransactionReport'%}" style="margin-left:41%">
+        <button class="btn btn-primary " type="submit">
+            <span class="glyphicon glyphicon-home"></span>
+            Back
+        </button>
+    </a>
 </form>
+</div>
 {% endblock %}
