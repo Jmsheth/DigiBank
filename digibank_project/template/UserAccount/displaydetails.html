@@ -4,33 +4,24 @@
 <h2> Customer Account Summary </h2>
 <form method = "POST" class="myc">
  {% csrf_token %}
-    <table>
+
+    <table border="2">
         <tr>
-            <td><b>Account Number</b></td>
-            <td><b>{{ acc.accountNum }}</b></td>
+            <th><b>Account Number</b></th>
+             <th><b> Account Type </b></th>
+            <th><b> Balance </b></th>
+
         <tr/>
+        {% for list in acc%}
         <tr>
-            <td>
-
-                <b> Account Type </b>
-
-            </td>
-            <td>
-
-              <b> {{ acc.acntType }} </b>
-
-            </td>
+            <td><b>{{ list.accountNum }}</b></td>
+            <td><b> {{ list.acntType }} </b></td>
+             <td><b>  {{ list.balance }}  </b></td>
         </tr>
-        <tr>
-            <td><b> Balance </b></td>
-            <td>
+        {%endfor%}
 
-              <b>  {{ acc.balance }}  </b>
-
-            </td>
-        </tr>
     </table>
-
+    <a href = "{% url 'login:userAccountSummary'%}"> Back </a>
 </form>
 
 

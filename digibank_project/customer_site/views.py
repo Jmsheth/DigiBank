@@ -8,7 +8,9 @@ from django.template.context_processors import request
 from core_files.models import Account,Transactions
 from django.views.generic import CreateView
 from .forms import userTransactionReport,userFundsTransfer,userAccountSummary
-
+from django.utils import timezone
+import datetime
+from datetime import timedelta
 # Create your views here.
 def home(request):
     try:
@@ -126,10 +128,18 @@ def authdetails(request):
     try:
         # print("Inside")
         accnum = request.POST['accnum']
+        userid= request.POST['userid']
+        #print(accnum)
         # print("This is ",accnum)
-        acc = Account.objects.get(accountNum=accnum)
-        # print(acc)
-        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+        if 'all' in accnum:
+            #print(userid)
+            acc = Account.objects.filter(owner_id=userid)
+            new_acc=acc
+        else:
+
+            acc = Account.objects.get(accountNum=accnum)
+            new_acc=[acc]
+        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': new_acc})
     except:
         ...
 
@@ -151,8 +161,22 @@ def authReportdetails(request):
         print("Inside")
         accnum = request.POST['accnum']
         print("This is ",accnum)
-        txnCr = Transactions.objects.filter(accntFrom=accnum)
-        txnDb = Transactions.objects.filter(accntTo=accnum)
+
+        dateFrom = request.POST['fromdate']
+        print("This is ", dateFrom)
+        dateTo = request.POST['todate']
+
+        new_date = datetime.datetime.strptime(dateTo,'%Y-%m-%d')
+        final_date=new_date+datetime.timedelta(days=2)
+
+       # print("This is ",  dateTo+ datetime.timedelta(days=1))
+        accntFromAccount = Account.objects.get(accountNum=accnum)
+        print("This is ", accntFromAccount)
+        txnCr = Transactions.objects.filter(accntFrom=accntFromAccount).filter(dateTime__range=[dateFrom,final_date])
+        txnDb = Transactions.objects.filter(accntTo=accnum).filter(dateTime__range=[dateFrom,final_date])
+        # txnCr = Transactions.objects.filter(accntFrom=accntFromAccount)
+        # txnDb = Transactions.objects.filter(accntTo=accnum)
+
         print("Here")
         print("This is",txnDb)
         print("This is", txnCr)
@@ -160,15 +184,44 @@ def authReportdetails(request):
     except:
         ...
 
-class userFundsTransfer_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/FundsTransfr.html'
-    form_class = userFundsTransfer
 
-    def form_valid(self, form):
-        if form.is_valid():
-            uTrsfr = form.save(commit=False)
-            return super(userFundsTransfer_vw,self).form_valid(form)
+def userFundsTransfer(request):
+        customer = Customer.objects.get(userid=request.session['sessionid'])
+        cid = customer.id
+        account = Account.objects.filter(owner_id=cid)
+
+        return render(request, 'UserAccount/FundsTransfr.html',
+                      {'sessionid': request.session['sessionid'], 'account': account, 'customer': customer})
+
+def authFundTrsfrDetails(request):
+    try:
+        print("Inside")
+        accnum = request.POST['accnum']
+        print("This is ", accnum)
+        fromroutingNo = request.POST['fromroutingNo']
+        print("This is ", fromroutingNo)
+        toAccount = request.POST['toAccount']
+        print("This is ", toAccount)
+        toroutingNo = request.POST['toroutingNo']
+        print("This is ", toroutingNo)
+        amount = request.POST['amount']
+        print("This is ", amount)
+        transferDesc = request.POST['transferDesc']
+        print("This is ", transferDesc)
+        txn = Transactions()
+        txn.accntFrom = Account.objects.get(accountNum=accnum)
+        txn.accntTo = toAccount
+        txn.toRoutingNo = toroutingNo
+        txn.amount = amount
+        txn.transferDesc = transferDesc
+        txn.save()
+
+        return render(request, 'UserAccount/displayFundsTrnsfrDtls.html',
+                      {'sessionid': request.session['sessionid'], 'txn': txn})
+
+    except Exception as e:
+        print(e)
+        return redirect("/userTransactionReport/")
 
 
 def user_dd_req(request):

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2> Funds Transfer Details </h2>
+<form method = "POST" class="myc">
+ {% csrf_token %}
+    <table>
+        <tr>
+            <td><b>Account Number From</b></td>
+            <td><b>{{ txn.accntFrom }}</b></td>
+        <tr/>
+        <tr>
+            <td>
+
+                <b> Account Number To </b>
+
+            </td>
+            <td>
+
+              <b> {{ txn.accntTo }} </b>
+
+            </td>
+        </tr>
+        <tr>
+            <td><b> Transfer Amount  </b></td>
+            <td>
+
+              <b>  {{ txn.amount }}  </b>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td><b> Transfer Description  </b></td>
+            <td>
+
+              <b>  {{ txn.transferDesc }}  </b>
+
+            </td>
+        </tr>
+
+    </table>
+
+    <a href = "{% url 'login:userFundsTransfer'%}"> Back </a>
+
+</form>
+{% endblock %}
