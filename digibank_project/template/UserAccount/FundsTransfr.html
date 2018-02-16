@@ -1,6 +1,17 @@
 
 {% extends 'base.html' %}
 {% block content %}
+{%if error %}
+<body onload="myFunction()">
+<script>
+    function myFunction(){
+    alert("Balance is Low,Insufficient Funds to Transfer");
+    }
+</script>
+{%else%}
+<body>
+{%endif%}
+
 <h2> Funds Transfer </h2>
 <form method = "post" class="" action="{% url 'login:viewFundsTrsfrdetails'%}">
  {% csrf_token %}
@@ -46,8 +57,10 @@
             <td><input type="text" name="transferDesc" required></td>
         </tr>
 
+
     </table>
     <button type = "submit"> Transfer </button>
 
 </form>
+</body>
 {% endblock %}

@@ -196,29 +196,54 @@ def userFundsTransfer(request):
 
 def authFundTrsfrDetails(request):
     try:
-        print("Inside")
+        # print("Inside")
         accnum = request.POST['accnum']
-        print("This is ", accnum)
+        # print("This is ", accnum)
         fromroutingNo = request.POST['fromroutingNo']
-        print("This is ", fromroutingNo)
+        # print("This is ", fromroutingNo)
         toAccount = request.POST['toAccount']
-        print("This is ", toAccount)
+        # print("This is ", toAccount)
         toroutingNo = request.POST['toroutingNo']
-        print("This is ", toroutingNo)
+        # print("This is ", toroutingNo)
         amount = request.POST['amount']
-        print("This is ", amount)
+        # print("This is ", amount)
         transferDesc = request.POST['transferDesc']
-        print("This is ", transferDesc)
-        txn = Transactions()
-        txn.accntFrom = Account.objects.get(accountNum=accnum)
-        txn.accntTo = toAccount
-        txn.toRoutingNo = toroutingNo
-        txn.amount = amount
-        txn.transferDesc = transferDesc
-        txn.save()
+        # print("This is ", transferDesc)
 
-        return render(request, 'UserAccount/displayFundsTrnsfrDtls.html',
-                      {'sessionid': request.session['sessionid'], 'txn': txn})
+        # print(Account.objects.values_list('balance',flat=True).filter(accountNum=accnum))
+
+        balanceAmount = Account.objects.get(accountNum=accnum)
+
+        # print("newamount",balanceAmount.balance)
+
+        if float(amount) <= balanceAmount.balance:
+            # print("IN IF BLOCK")
+            txn = Transactions()
+            txn.accntFrom = Account.objects.get(accountNum=accnum)
+            txn.accntTo = toAccount
+            txn.toRoutingNo = toroutingNo
+            txn.amount = amount
+            txn.transferDesc = transferDesc
+            txn.save()
+            updatedBalance = balanceAmount.balance - float(amount)
+            # print(updatedBalance)
+            # print("updatedBalance",updatedBalance)
+
+            Account.objects.filter(accountNum=accnum).update(balance= updatedBalance)
+
+            balanceRemaining = Account.objects.get(accountNum=accnum)
+
+            # print("After Update Amount", balanceRemaining.balance)
+
+            return render(request, 'UserAccount/displayFundsTrnsfrDtls.html',
+                      {'sessionid': request.session['sessionid'], 'txn': txn ,'balanceRemaining':balanceRemaining })
+        else:
+            customer = Customer.objects.get(userid=request.session['sessionid'])
+            cid = customer.id
+            account = Account.objects.filter(owner_id=cid)
+
+            return render(request, 'UserAccount/FundsTransfr.html',
+                          {'sessionid': request.session['sessionid'], 'account': account, 'customer': customer,'error':'Balance is low,Insufficient Funds to Transfer'})
 
     except Exception as e:
         print(e)
