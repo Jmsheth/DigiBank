@@ -114,6 +114,10 @@ def addAccDetail(request):
     return redirect('employee_site:empHome')
 
 def emp_account_act(request, pk=-1):
+    try:
+        request.session["empsession"]
+    except:
+        return redirect("employee_site:empHome")
     form = EmpAccActivationSearch()
     if request.method == "GET":
         if "search" in request.GET:
@@ -153,6 +157,11 @@ def emp_account_act(request, pk=-1):
 
 
 def emp_dd_req(request, pk=-1):
+    try:
+        request.session["empsession"]
+    except:
+        return redirect("employee_site:empHome")
+
     dd_requests = DDRequest.objects.filter(approved=False)
     if not dd_requests:
         redirect("/employee/")
@@ -174,6 +183,11 @@ def emp_dd_req(request, pk=-1):
 
 
 def emp_checks(request, pk=-1):
+    try:
+        request.session["empsession"]
+    except:
+        return redirect("employee_site:empHome")
+
     check_requests = CheckRequest.objects.filter(approved=False)
     if pk != -1:
         check_req = CheckRequest.objects.get(pk=pk)
