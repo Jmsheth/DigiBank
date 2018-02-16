@@ -12,6 +12,7 @@ urlpatterns = [
     path('resetpassword/',views.resetpassword,name='resetpassword'),
     path('resetauth/',views.resetauth,name='resetauth'),
     path('auth/',views.auth,name='auth'),
+    path('newcustomer/',views.newCustomer,name='newcustomer'),
     path("account_activation/",
          views.emp_account_act,
          name="Account Activation"),

@@ -33,7 +33,16 @@
      	</ul>
 
 
-			<ul class="nav navbar-nav navbar-right">
+        {% if empsession %}
+		<ul class="nav navbar-nav">
+      			<li>
+					<a href="{% url 'employee_site:newcustomer' %}">
+						New Customer
+					</a>
+				</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
 				<li class="">
 					<a href="{% url 'employee_site:empLogout' %}">
 						<span class="glyphicon glyphicon-log-out" aria-hideen="true"></span>&nbsp;
