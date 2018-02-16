@@ -251,6 +251,9 @@ def authFundTrsfrDetails(request):
 
 
 def user_dd_req(request):
+    if request.session["sessionid"] is "":
+        print("sessionid is empty string")
+        return redirect("login:cusHome")
     if request.method == "GET":
         user = Customer.objects.get(
             userid=request.session["sessionid"])
@@ -284,6 +287,9 @@ def user_dd_req(request):
 
 
 def user_check_req(request):
+    if request.session["sessionid"] is "":
+        print("sessionid is empty string")
+        return redirect("login:cusHome")
     if request.method == "GET":
         user = Customer.objects.get(userid=request.session["sessionid"])
         accounts = Account.objects.filter(owner_id=user.id)
