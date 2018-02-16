@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2> Customer Account Summary </h2>
-<form method = "POST" class="myc">
- {% csrf_token %}
 
-    <table border="2">
-        <tr>
-            <th><b>Account Number</b></th>
-             <th><b> Account Type </b></th>
-            <th><b> Balance </b></th>
 
-        <tr/>
+<div class="container">
+    <h1>Customer Account Summary</h1>
+  	<hr>
+
+        <h3>Account Info</h3>
+    <div class="table-responsive" style="margin-left:12%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Account Number</th>
+                <th>Account Type</th>
+                <th>Account Balance</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for list in acc%}
         <tr>
             <td><b>{{ list.accountNum }}</b></td>
@@ -19,10 +25,17 @@
              <td><b>  {{ list.balance }}  </b></td>
         </tr>
         {%endfor%}
+        </tbody>
+  </table>
+  </div>
 
-    </table>
-    <a href = "{% url 'login:userAccountSummary'%}"> Back </a>
+    <a href = "{% url 'login:userAccountSummary'%}" style="margin-left:41%">
+        <button class="btn btn-primary " type="submit">
+            <span class="glyphicon glyphicon-home"></span>
+            Back
+        </button>
+    </a>
 </form>
-
+</div>
 
 {% endblock %}

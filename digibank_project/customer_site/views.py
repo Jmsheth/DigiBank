@@ -159,28 +159,14 @@ def userTransactionReport(request):
 
 def authReportdetails(request):
     try:
-        print("Inside")
         accnum = request.POST['accnum']
-        print("This is ",accnum)
-
         dateFrom = request.POST['fromdate']
-        print("This is ", dateFrom)
         dateTo = request.POST['todate']
-
         new_date = datetime.datetime.strptime(dateTo,'%Y-%m-%d')
         final_date=new_date+datetime.timedelta(days=2)
-
-       # print("This is ",  dateTo+ datetime.timedelta(days=1))
         accntFromAccount = Account.objects.get(accountNum=accnum)
-        print("This is ", accntFromAccount)
         txnCr = Transactions.objects.filter(accntFrom=accntFromAccount).filter(dateTime__range=[dateFrom,final_date])
         txnDb = Transactions.objects.filter(accntTo=accnum).filter(dateTime__range=[dateFrom,final_date])
-        # txnCr = Transactions.objects.filter(accntFrom=accntFromAccount)
-        # txnDb = Transactions.objects.filter(accntTo=accnum)
-
-        print("Here")
-        print("This is",txnDb)
-        print("This is", txnCr)
         return render(request, 'UserAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
     except:
         return redirect('login:cusHome')

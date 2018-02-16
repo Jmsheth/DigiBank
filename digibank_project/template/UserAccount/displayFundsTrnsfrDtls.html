@@ -1,56 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2> Funds Transfer Details </h2>
-<form method = "POST" class="myc">
- {% csrf_token %}
-    <table>
+
+
+
+<div class="container">
+    <h1>Fund Transfered</h1>
+  	<hr>
+
+        <h3>Transfer Details</h3>
+    <div class="table-responsive" style="margin-left:12%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Account Number From</th>
+                <th>Account Number To</th>
+                <th>Transfered Amount</th>
+                <th>Transfer Description</th>
+                <th>Latest Balance</th>
+
+            </tr>
+        </thead>
+        <tbody>
         <tr>
-            <td><b>Account Number From</b></td>
             <td><b>{{ txn.accntFrom }}</b></td>
-        <tr/>
-        <tr>
-            <td>
-
-                <b> Account Number To </b>
-
-            </td>
-            <td>
-
-              <b> {{ txn.accntTo }} </b>
-
-            </td>
+            <td><b> {{ txn.accntTo }} </b></td>
+             <td><b>  {{ txn.amount }}  </b></td>
+            <td><b> {{ txn.transferDesc }}  </b></td>
+             <td><b> {{ balanceRemaining.balance}}  </b></td>
         </tr>
-        <tr>
-            <td><b> Transfer Amount  </b></td>
-            <td>
+        </tbody>
+  </table>
+  </div>
 
-              <b>  {{ txn.amount }}  </b>
-
-            </td>
-        </tr>
-
-        <tr>
-            <td><b> Transfer Description  </b></td>
-            <td>
-
-              <b>  {{ txn.transferDesc }}  </b>
-
-            </td>
-        </tr>
-
-           <tr>
-            <td><b>  Balance Remaining </b></td>
-            <td>
-
-              <b>  {{ balanceRemaining.balance}}  </b>
-
-            </td>
-        </tr>
-
-    </table>
-
-    <a href = "{% url 'login:userFundsTransfer'%}"> Back </a>
-
+    <a href = "{% url 'login:userAccountSummary'%}" style="margin-left:41%">
+        <button class="btn btn-primary " type="submit">
+            <span class="glyphicon glyphicon-home"></span>
+            Back
+        </button>
+    </a>
 </form>
+</div>
 {% endblock %}
