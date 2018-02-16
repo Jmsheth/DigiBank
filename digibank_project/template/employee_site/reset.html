@@ -1,7 +1,7 @@
 {% extends 'empbase.html' %}
 {% load staticfiles %}
 {% block content %}
-    <div class="card back" >
+    <div class="card elog" >
           <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
             <h4>Reset Password</h4><br>
             <form class="form-signin" method="post" action="{% url 'employee_site:resetauth' %}">

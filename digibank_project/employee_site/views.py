@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from customer_site.models import Customer
 from core_files.models import DDRequest, CheckRequest, Account
-from .forms import EmpAccActivationSearch
+from .forms import EmpAccActivationSearch,NewCustomer
 from .models import EmpDetail
-from core_files.models import Account
+from core_files.models import Account,Transactions
 from django.views.generic import CreateView
+from django.utils import timezone
+import datetime
+from datetime import timedelta
 
 
 # Create your views here.
@@ -70,6 +73,46 @@ def newCustomer(request):
         return render(request,'employee_site/newcustomer.html',{'empsession': request.session['empsession']})
     else:
         return redirect('employee_site:empHome')
+
+def newaccCustomer(request):
+    pwd1 = request.POST['pwd1']
+    pwd2 = request.POST['pwd2']
+    global user
+    user = request.POST['userid']
+    if(pwd1==pwd2):
+        customer = Customer()
+        customer.firstName=request.POST['firstName']
+        customer.middleName = request.POST['middleName']
+        customer.lastName = request.POST['lastName']
+        customer.address = request.POST['address']
+        customer.city = request.POST['city']
+        customer.state = request.POST['state']
+        customer.zipCode = request.POST['zipCode']
+        customer.country = request.POST['country']
+        customer.phoneNumber = request.POST['phoneNumber']
+        customer.emailAdd = request.POST['emailAdd']
+        customer.kycId = request.POST['idtype']
+        customer.idNumber = request.POST['kycId']
+        customer.userid = user
+        customer.password = pwd1
+        customer.save()
+        return redirect('employee_site:newaccount')
+
+def newaccount(request):
+        return render(request,'employee_site/newacccustomer.html',{'empsession': request.session['empsession']})
+
+def addAccDetail(request):
+    cust=Customer.objects.get(userid=user)
+    print(cust.id)
+    account = Account()
+    account.accountNum= request.POST['accountNum']
+    account.routingNum=request.POST['routingNum']
+    account.acntType=request.POST['acntType']
+    account.balance=request.POST['balance']
+    account.owner=cust
+    account.save()
+    return redirect('employee_site:empHome')
+
 def emp_account_act(request, pk=-1):
     form = EmpAccActivationSearch()
     if request.method == "GET":
@@ -151,15 +194,15 @@ def emp_checks(request, pk=-1):
         return redirect("/employee/check_req/")
 
 def empAccountSummary(request):
-    customer = Customer.objects.get(userid=request.session['sessionid'])
-    cid = customer.id
+    employee = EmpDetail.objects.get(userid=request.session['empsession'])
+    #eid = employee.id
     # print(customer)
     # print(cid)
-    account = Account.objects.filter(owner_id=cid)
-    # print(account)
+    account = Account.objects.all()
+    print(account)
 
     return render(request,'EmpAccount/AccountSummary.html',
-                  {'sessionid':request.session['sessionid'],'account':account,'customer':customer})
+                  {'sessionid':request.session['empsession'],'account':account,'employee':employee})
 
 def authEmpAccountdetails(request):
     try:
@@ -168,22 +211,22 @@ def authEmpAccountdetails(request):
         # print("This is ",accnum)
         acc = Account.objects.get(accountNum=accnum)
         # print(acc)
-        return render(request, 'EmpAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+        return render(request, 'EmpAccount/displaydetails.html',{'empsession': request.session['empsession'], 'acc': acc})
     except:
         return redirect('employee_site:empHome')
 
 
 
 def empTransactionReport(request):
-    customer = Customer.objects.get(userid=request.session['sessionid'])
-    cid = customer.id
+    employee = EmpDetail.objects.get(userid=request.session['empsession'])
+    # eid = EmpDetail.id
     # print(customer)
     # print(cid)
-    account = Account.objects.filter(owner_id=cid)
+    account = Account.objects.all()
 
 
     return render(request, 'EmpAccount/TxnReport.html',
-                  {'sessionid': request.session['sessionid'], 'account': account,'customer': customer})
+                  {'empsession': request.session['empsession'], 'account': account,'employee':employee})
 
 
 def authEmpReportdetails(request):
@@ -191,12 +234,19 @@ def authEmpReportdetails(request):
         print("Inside")
         accnum = request.POST['accnum']
         print("This is ",accnum)
-        txnCr = Transactions.objects.filter(accntFrom=accnum)
-        txnDb = Transactions.objects.filter(accntTo=accnum)
-        print("Here")
-        print("This is",txnDb)
-        print("This is", txnCr)
-        return render(request, 'EmpAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
+
+        dateFrom = request.POST['fromdate']
+        print("This is ", dateFrom)
+        dateTo = request.POST['todate']
+
+        new_date = datetime.datetime.strptime(dateTo,'%Y-%m-%d')
+        final_date=new_date+datetime.timedelta(days=2)
+
+       # print("This is ",  dateTo+ datetime.timedelta(days=1))
+        accntFromAccount = Account.objects.get(accountNum=accnum)
+        print("This is ", accntFromAccount)
+        txnCr = Transactions.objects.filter(accntFrom=accntFromAccount).filter(dateTime__range=[dateFrom,final_date])
+        txnDb = Transactions.objects.filter(accntTo=accnum).filter(dateTime__range=[dateFrom,final_date])
+        return render(request, 'EmpAccount/displayTxndetails.html', {'empsession': request.session['empsession'], 'txnDb': txnDb,'txnCr': txnCr})
     except:
         return redirect('employee_site:empHome')
-

@@ -55,8 +55,10 @@ class Transactions(models.Model):
     accntTo = models.IntegerField(null=False)
     accntFrom = models.ForeignKey(Account, null=False,
                                   on_delete=models.CASCADE)
-    dateTime = models.DateTimeField(null=False)
+    dateTime = models.DateTimeField(default=timezone.now)
+    toRoutingNo=models.IntegerField(null=False)
     amount = models.FloatField(max_length=15)
+    transferDesc = models.CharField(max_length=200)
 
     def __str__(self):
         return str(self.accntFrom) + " to " + str(self.accntTo)

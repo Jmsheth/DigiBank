@@ -2,12 +2,12 @@
 {% extends 'empbase.html' %}
 {% block content %}
 <h2> Customer Account Summary </h2>
-<form method = "post" class="" action="{% url 'login:empviewdetails'%}">
+<form method = "post" class="" action="{% url 'employee_site:empviewdetails'%}">
  {% csrf_token %}
     <table>
         <tr>
-            <td><b>Owner</b></td>
-            <td><b>{{ customer.firstName }}</b></td>
+            <td><b>Employee Name</b></td>
+            <td><b>{{ employee.firstName }}</b></td>
         <tr/>
         <tr>
             <td><b>Account Number</b></td>
@@ -21,15 +21,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
-            <td><b>Date From:</b></td>
-            <td><input type="date" name="fromdate"></td>
-        </tr>
 
-        <tr>
-            <td><b>Date To:  </b></td>
-            <td><input type="date" name="todate"></td>
-        </tr>
     </table>
     <button type = "submit"> View Details </button>
 

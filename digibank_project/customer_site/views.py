@@ -8,7 +8,9 @@ from django.template.context_processors import request
 from core_files.models import Account,Transactions
 from django.views.generic import CreateView
 from .forms import userTransactionReport,userFundsTransfer,userAccountSummary
-
+from django.utils import timezone
+import datetime
+from datetime import timedelta
 # Create your views here.
 def home(request):
     try:
@@ -64,7 +66,8 @@ def resetauth(request):
 
     try:
         if pwd1 == pwd2:
-            Customer.objects.filter(emailAdd=em).update(password=pwd1)
+
+            Customer.objects.get(emailAdd=em).update(password=pwd1)
             return redirect('login:login')
     except:
         return redirect('login:resetpassword')
@@ -77,7 +80,7 @@ def resetpassauth(request):
 
     try:
         if(newpass==conpass):
-            Customer.objects.filter(userid={'sessionid':request.session['sessionid']}, password=currpass).update(password=conpass)
+            Customer.objects.filter(userid=request.session['sessionid'], password=currpass).update(password=conpass)
 
         del request.session['sessionid']
         return redirect('login:cusHome') #{'sessionid': request.session['sessionid']})
@@ -126,12 +129,20 @@ def authdetails(request):
     try:
         # print("Inside")
         accnum = request.POST['accnum']
+        userid= request.POST['userid']
+        #print(accnum)
         # print("This is ",accnum)
-        acc = Account.objects.get(accountNum=accnum)
-        # print(acc)
-        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+        if 'all' in accnum:
+            #print(userid)
+            acc = Account.objects.filter(owner_id=userid)
+            new_acc=acc
+        else:
+
+            acc = Account.objects.get(accountNum=accnum)
+            new_acc=[acc]
+        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': new_acc})
     except:
-        ...
+        return redirect('login:cusHome')
 
 
 def userTransactionReport(request):
@@ -151,24 +162,92 @@ def authReportdetails(request):
         print("Inside")
         accnum = request.POST['accnum']
         print("This is ",accnum)
-        txnCr = Transactions.objects.filter(accntFrom=accnum)
-        txnDb = Transactions.objects.filter(accntTo=accnum)
+
+        dateFrom = request.POST['fromdate']
+        print("This is ", dateFrom)
+        dateTo = request.POST['todate']
+
+        new_date = datetime.datetime.strptime(dateTo,'%Y-%m-%d')
+        final_date=new_date+datetime.timedelta(days=2)
+
+       # print("This is ",  dateTo+ datetime.timedelta(days=1))
+        accntFromAccount = Account.objects.get(accountNum=accnum)
+        print("This is ", accntFromAccount)
+        txnCr = Transactions.objects.filter(accntFrom=accntFromAccount).filter(dateTime__range=[dateFrom,final_date])
+        txnDb = Transactions.objects.filter(accntTo=accnum).filter(dateTime__range=[dateFrom,final_date])
+        # txnCr = Transactions.objects.filter(accntFrom=accntFromAccount)
+        # txnDb = Transactions.objects.filter(accntTo=accnum)
+
         print("Here")
         print("This is",txnDb)
         print("This is", txnCr)
         return render(request, 'UserAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
     except:
-        ...
+        return redirect('login:cusHome')
 
-class userFundsTransfer_vw(CreateView):
-    model = Account
-    template_name = 'UserAccount/FundsTransfr.html'
-    form_class = userFundsTransfer
 
-    def form_valid(self, form):
-        if form.is_valid():
-            uTrsfr = form.save(commit=False)
-            return super(userFundsTransfer_vw,self).form_valid(form)
+def userFundsTransfer(request):
+        customer = Customer.objects.get(userid=request.session['sessionid'])
+        cid = customer.id
+        account = Account.objects.filter(owner_id=cid)
+
+        return render(request, 'UserAccount/FundsTransfr.html',
+                      {'sessionid': request.session['sessionid'], 'account': account, 'customer': customer})
+
+def authFundTrsfrDetails(request):
+    try:
+        # print("Inside")
+        accnum = request.POST['accnum']
+        # print("This is ", accnum)
+        fromroutingNo = request.POST['fromroutingNo']
+        # print("This is ", fromroutingNo)
+        toAccount = request.POST['toAccount']
+        # print("This is ", toAccount)
+        toroutingNo = request.POST['toroutingNo']
+        # print("This is ", toroutingNo)
+        amount = request.POST['amount']
+        # print("This is ", amount)
+        transferDesc = request.POST['transferDesc']
+        # print("This is ", transferDesc)
+
+        # print(Account.objects.values_list('balance',flat=True).filter(accountNum=accnum))
+
+        balanceAmount = Account.objects.get(accountNum=accnum)
+
+        # print("newamount",balanceAmount.balance)
+
+        if float(amount) <= balanceAmount.balance:
+            # print("IN IF BLOCK")
+            txn = Transactions()
+            txn.accntFrom = Account.objects.get(accountNum=accnum)
+            txn.accntTo = toAccount
+            txn.toRoutingNo = toroutingNo
+            txn.amount = amount
+            txn.transferDesc = transferDesc
+            txn.save()
+            updatedBalance = balanceAmount.balance - float(amount)
+            # print(updatedBalance)
+            # print("updatedBalance",updatedBalance)
+
+            Account.objects.filter(accountNum=accnum).update(balance= updatedBalance)
+
+            balanceRemaining = Account.objects.get(accountNum=accnum)
+
+            # print("After Update Amount", balanceRemaining.balance)
+
+            return render(request, 'UserAccount/displayFundsTrnsfrDtls.html',
+                      {'sessionid': request.session['sessionid'], 'txn': txn ,'balanceRemaining':balanceRemaining })
+        else:
+            customer = Customer.objects.get(userid=request.session['sessionid'])
+            cid = customer.id
+            account = Account.objects.filter(owner_id=cid)
+
+            return render(request, 'UserAccount/FundsTransfr.html',
+                          {'sessionid': request.session['sessionid'], 'account': account, 'customer': customer,'error':'Balance is low,Insufficient Funds to Transfer'})
+
+    except Exception as e:
+        print(e)
+        return redirect("/userTransactionReport/")
 
 
 def user_dd_req(request):
