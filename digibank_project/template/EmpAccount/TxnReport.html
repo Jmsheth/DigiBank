@@ -1,12 +1,12 @@
 {% extends 'empbase.html' %}
 {% block content %}
 <h2> Customer Transaction Report </h2>
-<form method = "post" class="" action="{% url 'login:empviewreport'%}">
+<form method = "post" class="" action="{% url 'employee_site:empviewreport'%}">
  {% csrf_token %}
     <table>
         <tr>
-            <td><b>Owner</b></td>
-            <td><b>{{ customer.firstName }}</b></td>
+            <td><b> Employee </b></td>
+            <td><b>{{  employee.firstName }}</b></td>
         <tr/>
         <tr>
             <td><b>Account Number</b></td>
@@ -22,12 +22,12 @@
         </tr>
         <tr>
             <td><b>Date From:</b></td>
-            <td><input type="date" name="fromdate"></td>
+            <td><input type="date" name="fromdate" required></td>
         </tr>
 
         <tr>
             <td><b>Date To:  </b></td>
-            <td><input type="date" name="todate"></td>
+            <td><input type="date" name="todate" required></td>
         </tr>
     </table>
     <button type = "submit"> View Report </button>

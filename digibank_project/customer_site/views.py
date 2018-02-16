@@ -128,10 +128,18 @@ def authdetails(request):
     try:
         # print("Inside")
         accnum = request.POST['accnum']
+        userid= request.POST['userid']
+        #print(accnum)
         # print("This is ",accnum)
-        acc = Account.objects.get(accountNum=accnum)
-        # print(acc)
-        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+        if 'all' in accnum:
+            #print(userid)
+            acc = Account.objects.filter(owner_id=userid)
+            new_acc=acc
+        else:
+
+            acc = Account.objects.get(accountNum=accnum)
+            new_acc=[acc]
+        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': new_acc})
     except:
         ...
 
@@ -192,8 +200,8 @@ def authFundTrsfrDetails(request):
         print("This is ", accnum)
         fromroutingNo = request.POST['fromroutingNo']
         print("This is ", fromroutingNo)
-        fromAccount = request.POST['fromAccount']
-        print("This is ", fromAccount)
+        toAccount = request.POST['toAccount']
+        print("This is ", toAccount)
         toroutingNo = request.POST['toroutingNo']
         print("This is ", toroutingNo)
         amount = request.POST['amount']
@@ -202,7 +210,7 @@ def authFundTrsfrDetails(request):
         print("This is ", transferDesc)
         txn = Transactions()
         txn.accntFrom = Account.objects.get(accountNum=accnum)
-        txn.accntTo = fromAccount
+        txn.accntTo = toAccount
         txn.toRoutingNo = toroutingNo
         txn.amount = amount
         txn.transferDesc = transferDesc

@@ -8,6 +8,7 @@
         <tr>
             <td><b>Owner</b></td>
             <td><b>{{ customer.firstName }}</b></td>
+            <input type="hidden" id="userid" name="userid" value="{{customer.id }}">
         <tr/>
         <tr>
             <td><b>Account Number</b></td>
@@ -18,6 +19,9 @@
                             {{ i.accountNum }}
                     </option>
                     {% endfor %}
+                    <option value ='all'>
+                        All
+                    </option>
                 </select>
             </td>
         </tr>
