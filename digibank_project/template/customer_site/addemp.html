@@ -1,0 +1,8 @@
+
+<form>
+{% csrf_token %}
+{% for field in record %}
+    {{field.label_tag}}
+    {{field}}
+{%endfor%}
+</form>
