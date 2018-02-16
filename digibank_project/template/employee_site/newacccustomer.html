@@ -1,0 +1,57 @@
+{% extends 'empbase.html' %}
+
+{% block title %}DigiBank{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h1>New Customer</h1>
+
+
+        <h3>Account Information</h3>
+        <div class="container" style="margin-left:10%;">
+        <form class="form-horizontal" role="form" method="post" action="{%url 'employee_site:addAccDetail'%}">
+            {% csrf_token %}
+          <div class="form-group row">
+            <div class="col-xs-3">
+                <label>Account Number:</label>
+                <input class="form-control" name="accountNum" type="text">
+            </div>
+            <div class="col-xs-3">
+                <label>Routing Number</label>
+                <input class="form-control" name="routingNum" type="text" >
+            </div>
+            <div class="col-xs-3">
+                <label>Balance:</label>
+                <input class="form-control" name="balance" type="text" >
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-3">
+                <label>Account Type:</label>
+                <input class="form-control" name="acntType" type="text">
+            </div>
+
+          </div>
+            <br>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-7">
+                <a href="{% url 'login:cusHome'%}">
+                    <button type="button" class="btn btn-default">
+                        Back
+                    </button>
+                </a>
+                <input type="reset" class="btn btn-default" style="margin-left:5%;" value="Reset">
+                <button class="btn btn-primary " type="submit" style="margin-left:5%;"> Next <span class="glyphicon glyphicon-chevron-right"></span></button>
+            </div>
+          </div>
+
+        </form>
+        </div>
+      </div>
+</div>
+<hr>
+
+{% endblock %}

@@ -2,7 +2,15 @@
 	background: url('images/digiback.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
+
 }
+.loginback{
+    background: url('images/1.jpg');
+    background-repeat: no-repeat;
+    height: 150%;
+    background-size: 100%;
+}
+
 .myclass{
 	text-align: center;
 }
@@ -32,8 +40,6 @@ ul.b {
   	text-align: center;
   	top: 50%;
   	width: 25%;
- 	background-color: #000080;
- 	color: #B40404;
 }
 .fp{
 	color:white;

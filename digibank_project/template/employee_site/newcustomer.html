@@ -11,12 +11,12 @@
 
         <h3>Personal info</h3>
         <div class="container" style="margin-left:10%;">
-        <form class="form-horizontal" role="form" method="post" action="{% url 'login:updateauth'%}">
+        <form class="form-horizontal" role="form" method="post" action="{% url 'employee_site:nextnew'%}">
             {% csrf_token %}
           <div class="form-group row">
             <div class="col-xs-3">
                 <label>First Name:</label>
-                <input class="form-control" name="firstName" type="text">
+                <input class="form-control" name="firstName" type="text" required>
             </div>
             <div class="col-xs-3">
                 <label>Middle Name:</label>
@@ -24,49 +24,42 @@
             </div>
             <div class="col-xs-3">
                 <label>Last name:</label>
-                <input class="form-control" name="lastName" type="text" >
+                <input class="form-control" name="lastName" type="text" required>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-6">
+            <div class="col-xs-3">
                 <label>Street Address:</label>
-                <input class="form-control" name="address" type="text">
+                <input class="form-control" name="address" type="text" required>
             </div>
             <div class="col-xs-3">
                 <label>City:</label>
-                <input class="form-control" name="city" type="text">
+                <input class="form-control" name="city" type="text" required>
+            </div>
+            <div class="col-xs-3">
+                <label>State:</label>
+                <input class="form-control" name="state" type="text" required>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-xs-3">
-                <label>State:</label>
-                <input class="form-control" name="state" type="text">
-            </div>
-            <div class="col-xs-3">
                 <label>Zipcode:</label>
-                <input class="form-control" name="zipCode" type="text">
+                <input class="form-control" name="zipCode" type="text" required>
             </div>
             <div class="col-xs-3">
                 <label>Country:</label>
-                <select class="form-control bfh-states" data-country="US" data-state="CA"></select>
+                <input class="form-control" name="country" type="text" required>
+            </div>
+            <div class="col-xs-3">
+                <label>Contact Number:</label>
+                <input type="tel" class="form-control" name="phoneNumber" type="text" required>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-xs-3">
                 <label>Email Address: </label>
-                <input class="form-control" name="emailAdd" type="text">
+                <input type="email" class="form-control" name="emailAdd" type="text" required>
             </div>
-            <div class="col-xs-3">
-                <label>Contact Number:</label>
-                <input class="form-control" name="phoneNumber" type="text">
-            </div>
-            <div class="col-xs-3">
-                <label>User Name:</label>
-                <input class="form-control" name="userid" type="text">
-            </div>
-          </div>
-
-            <div class="form-group row">
             <div class="col-xs-3">
                 <label>KYC ID Type: </label>
                 <select class="form-control" name="idtype">
@@ -78,10 +71,23 @@
             </div>
             <div class="col-xs-3">
                 <label>KYC ID Number:</label>
-                <input class="form-control" name="kycId" type="text">
+                <input class="form-control" name="kycId" type="text" required>
             </div>
           </div>
-
+          <div class="form-group row">
+            <div class="col-xs-3">
+                <label>User Name:</label>
+                <input class="form-control" name="userid" type="text" required>
+            </div>
+            <div class="col-xs-3">
+                <label>Password:</label>
+                <input class="form-control" type="password" name="pwd1" required>
+            </div>
+            <div class="col-xs-3">
+                <label>Confirm Password:</label>
+                <input class="form-control" type="password" name="pwd2" required>
+            </div>
+          </div>
             <br>
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
@@ -92,7 +98,7 @@
                     </button>
                 </a>
                 <input type="reset" class="btn btn-default" style="margin-left:5%;" value="Reset">
-                <button class="btn btn-primary " type="submit" style="margin-left:5%;"><span class="glyphicon glyphicon-ok"></span> Save Changes</button>
+                <button class="btn btn-primary " type="submit" style="margin-left:5%;"> Next <span class="glyphicon glyphicon-chevron-right"></span></button>
             </div>
           </div>
 

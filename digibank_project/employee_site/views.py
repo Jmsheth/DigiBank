@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from customer_site.models import Customer
 from core_files.models import DDRequest, CheckRequest, Account
-from .forms import EmpAccActivationSearch
+from .forms import EmpAccActivationSearch,NewCustomer
 from .models import EmpDetail
 from core_files.models import Account
 from django.views.generic import CreateView
@@ -70,6 +70,46 @@ def newCustomer(request):
         return render(request,'employee_site/newcustomer.html',{'empsession': request.session['empsession']})
     else:
         return redirect('employee_site:empHome')
+
+def newaccCustomer(request):
+    pwd1 = request.POST['pwd1']
+    pwd2 = request.POST['pwd2']
+    global user
+    user = request.POST['userid']
+    if(pwd1==pwd2):
+        customer = Customer()
+        customer.firstName=request.POST['firstName']
+        customer.middleName = request.POST['middleName']
+        customer.lastName = request.POST['lastName']
+        customer.address = request.POST['address']
+        customer.city = request.POST['city']
+        customer.state = request.POST['state']
+        customer.zipCode = request.POST['zipCode']
+        customer.country = request.POST['country']
+        customer.phoneNumber = request.POST['phoneNumber']
+        customer.emailAdd = request.POST['emailAdd']
+        customer.kycId = request.POST['idtype']
+        customer.idNumber = request.POST['kycId']
+        customer.userid = user
+        customer.password = pwd1
+        customer.save()
+        return redirect('employee_site:newaccount')
+
+def newaccount(request):
+        return render(request,'employee_site/newacccustomer.html',{'empsession': request.session['empsession']})
+
+def addAccDetail(request):
+    cust=Customer.objects.get(userid=user)
+    print(cust.id)
+    account = Account()
+    account.accountNum= request.POST['accountNum']
+    account.routingNum=request.POST['routingNum']
+    account.acntType=request.POST['acntType']
+    account.balance=request.POST['balance']
+    account.owner=cust
+    account.save()
+    return redirect('employee_site:empHome')
+
 def emp_account_act(request, pk=-1):
     form = EmpAccActivationSearch()
     if request.method == "GET":

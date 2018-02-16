@@ -6,6 +6,11 @@
 <title>DigiBank</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap-form-helpers.min.css" rel="stylesheet">
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-formhelpers.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
@@ -14,7 +19,7 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 
-			<a class="navbar-brand" href="">DigiBank</a>
+			<a class="navbar-brand" href="{%url 'employee_site:empHome'%}">DigiBank</a>
 
 		</div>
 
@@ -58,7 +63,7 @@
 
 	</div>
 </nav>
-<body>
+<body class="bg">
 {% block content %}
 {% endblock %}
 </body>
