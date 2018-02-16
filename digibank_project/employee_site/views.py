@@ -163,8 +163,8 @@ def emp_dd_req(request, pk=-1):
         return redirect("employee_site:empHome")
 
     dd_requests = DDRequest.objects.filter(approved=False)
-    if not dd_requests:
-        redirect("/employee/")
+    if not dd_requests or len(dd_requests) == 0:
+        return redirect("/employee/")
     if pk == -1:
         dd_req = dd_requests[0]
     else:
@@ -192,6 +192,8 @@ def emp_checks(request, pk=-1):
     if pk != -1:
         check_req = CheckRequest.objects.get(pk=pk)
     else:
+        if len(check_requests) == 0:
+            return redirect("employee_site:empHome")
         check_req = check_requests[0]
     acc = Account.objects.get(pk=check_req.account_id)
     customer = Customer.objects.get(pk=acc.owner_id)
