@@ -1,19 +1,27 @@
 
 {% extends 'base.html' %}
 {% block content %}
-<h2> Customer Account Summary </h2>
-<form method = "post" class="" action="{% url 'login:viewdetails'%}">
- {% csrf_token %}
-    <table>
-        <tr>
-            <td><b>Owner</b></td>
-            <td><b>{{ customer.firstName }}</b></td>
-            <input type="hidden" id="userid" name="userid" value="{{customer.id }}">
-        <tr/>
-        <tr>
-            <td><b>Account Number</b></td>
-            <td>
-                <select name='accnum'>
+
+
+<div class="container">
+    <h1>Customer Account Summary</h1>
+  	<hr>
+
+        <h3>Account Info</h3>
+        <div class="container" style="margin-left:10%;">
+        <form class="form-horizontal" role="form" method="post" action="{% url 'login:viewdetails'%}">
+            {% csrf_token %}
+          <div class="form-group row" style="margin-left:30%;">
+            <div class="col-xs-6">
+                <label>Account Owner:</label>
+                <label>{{ customer.firstName }} {{ customer.lastName }}</label>
+                <input type="hidden" id="userid" name="userid" value="{{ customer.id }}">
+            </div>
+          </div>
+          <div class="form-group row" style="margin-left:30%;">
+            <div class="col-xs-3">
+                <label>Account Number:</label>
+                <select class="form-control" name='accnum'>
                     {% for i in account %}
                     <option>
                             {{ i.accountNum }}
@@ -23,11 +31,24 @@
                         All
                     </option>
                 </select>
-            </td>
-        </tr>
+            </div>
+          </div>
+            <hr>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="margin-left:3%;" ></label>
+            <div class="col-md-8">
+                <a href="{% url 'login:cusHome'%}">
+                    <button type="button" class="btn btn-default">
+                        Back
+                    </button>
+                </a>
+                <button class="btn btn-primary " type="submit" style="margin-left:5%;"><span class="glyphicon glyphicon-ok"></span> View Summary</button>
+            </div>
+          </div>
 
-    </table>
-    <button type = "submit"> View Details </button>
+        </form>
+        </div>
+      </div>
 
-</form>
+
 {% endblock %}
