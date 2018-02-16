@@ -66,7 +66,8 @@ def resetauth(request):
 
     try:
         if pwd1 == pwd2:
-            Customer.objects.filter(emailAdd=em).update(password=pwd1)
+
+            Customer.objects.get(emailAdd=em).update(password=pwd1)
             return redirect('login:login')
     except:
         return redirect('login:resetpassword')
@@ -79,7 +80,7 @@ def resetpassauth(request):
 
     try:
         if(newpass==conpass):
-            Customer.objects.filter(userid={'sessionid':request.session['sessionid']}, password=currpass).update(password=conpass)
+            Customer.objects.filter(userid=request.session['sessionid'], password=currpass).update(password=conpass)
 
         del request.session['sessionid']
         return redirect('login:cusHome') #{'sessionid': request.session['sessionid']})
@@ -141,7 +142,7 @@ def authdetails(request):
             new_acc=[acc]
         return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': new_acc})
     except:
-        ...
+        return redirect('login:cusHome')
 
 
 def userTransactionReport(request):
@@ -182,7 +183,7 @@ def authReportdetails(request):
         print("This is", txnCr)
         return render(request, 'UserAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
     except:
-        ...
+        return redirect('login:cusHome')
 
 
 def userFundsTransfer(request):

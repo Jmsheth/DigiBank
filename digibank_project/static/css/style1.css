@@ -2,8 +2,14 @@
 	background: url('images/digiback.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
-
 }
+
+.bg1{
+	background: url('images/digiback-2.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
 .loginback{
     background: url('images/1.jpg');
     background-repeat: no-repeat;
@@ -40,9 +46,13 @@ ul.b {
   	text-align: center;
   	top: 50%;
   	width: 25%;
+  	background-color: #e6e6e6;
+}
+.fp1{
+	color:white;
 }
 .fp{
-	color:white;
+	color:black;
 }
 .logo{
 	font-family: 'Bungee', cursive;
