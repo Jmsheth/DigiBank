@@ -15,8 +15,26 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="/">DigiBank</a>
 		</div>
+		{% if sessionid %}
+		<ul class="nav navbar-nav">
+				<li>
+					<a href="{% url 'login:userAccountSummary' %}">
+						Account Summary
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'login:userTransactionReport' %}">
+						Transaction Report
+					</a>
+				</li>
+
+				<li>
+					<a href="{% url 'login:userTransactionReport' %}">
+						Funds Transfer
+					</a>
+				</li>
+			</ul>
 		<ul class="nav navbar-nav navbar-right">
-			{% if sessionid %}
 			<li class="dropdown">
         		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
         	<span class="caret"></span></a>
@@ -32,7 +50,9 @@
 						Logout
 					</a>
 				</li>
+		</ul>
 			{% else %}
+		<ul class="nav navbar-nav navbar-right">
 			<li class="">
 					<a href="{% url 'login:login'%}">
 						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;

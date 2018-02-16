@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2> Customer Account Summary </h2>
+<form method = "post" class="" action="{% url 'login:viewdetails'%}">
+ {% csrf_token %}
+    <table>
+        <tr>
+            <td><b>Owner</b></td>
+            <td><b>{{ customer.firstName }}</b></td>
+        <tr/>
+        <tr>
+            <td><b>Account Number</b></td>
+            <td>
+                <select name='accnum'>
+                    {% for i in account %}
+                    <option>
+                            {{ i.accountNum }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Date From:</b></td>
+            <td><input type="date" name="fromdate"></td>
+        </tr>
+
+        <tr>
+            <td><b>Date To:  </b></td>
+            <td><input type="date" name="todate"></td>
+        </tr>
+    </table>
+    <button type = "submit"> View Details </button>
+
+</form>
+{% endblock %}

@@ -12,6 +12,7 @@ urlpatterns = [
     path('resetpassword/',views.resetpassword,name='resetpassword'),
     path('resetauth/',views.resetauth,name='resetauth'),
     path('auth/',views.auth,name='auth'),
+    path('newcustomer/',views.newCustomer,name='newcustomer'),
     path("account_activation/",
          views.emp_account_act,
          name="Account Activation"),
@@ -29,5 +30,9 @@ urlpatterns = [
          name="Check Requests"),
     path("check_req/<int:pk>/",
          views.emp_checks,
-         name="Check Requests")
+         name="Check Requests"),
+    path('empAccountSummary/', views.empAccountSummary, name='empAccountSummary'),
+    path('authEmpsummary/', views.authEmpAccountdetails, name='empviewdetails'),
+    path('empTransactionReport/', views.empTransactionReport, name='empTransactionReport'),
+    path('authEmptxnreport/', views.authEmpReportdetails, name='empviewreport'),
 ]

@@ -47,18 +47,17 @@ class Account(models.Model):
                               on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.owner)
+        return str(self.accountNum)
 
 
-class Transaction(models.Model):
+class Transactions(models.Model):
     # Transaction Model included by<kashif> to utilize Transaction details
-    accntTo = models.CharField(max_length=15, null=False)
+    accntTo = models.IntegerField(null=False)
     accntFrom = models.ForeignKey(Account, null=False,
                                   on_delete=models.CASCADE)
     dateTime = models.DateTimeField(null=False)
     amount = models.FloatField(max_length=15)
 
     def __str__(self):
-        return self.accntFrom.accountNum \
-               + " to " + self.accntTo
+        return str(self.accntFrom) + " to " + str(self.accntTo)
 

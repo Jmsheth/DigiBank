@@ -5,6 +5,9 @@ from .models import Customer
 from core_files.models import Account, CheckRequest, DDRequest
 from _overlapped import NULL
 from django.template.context_processors import request
+from core_files.models import Account,Transactions
+from django.views.generic import CreateView
+from .forms import userTransactionReport,userFundsTransfer,userAccountSummary
 
 # Create your views here.
 def home(request):
@@ -89,8 +92,8 @@ def logout(request):
         pass
     return redirect('login:cusHome')
 
-def userAccountSummary(request):
-    pass
+# def userAccountSummary(request):
+#     pass
 
 def updateprofile(request):
     customer = Customer.objects.get(userid=request.session['sessionid'])
@@ -106,6 +109,66 @@ def updateauth(request):
         return redirect('login:cusHome')
     except:
         return redirect('login:updateprofile')
+
+
+def userAccountSummary(request):
+    customer = Customer.objects.get(userid=request.session['sessionid'])
+    cid = customer.id
+    # print(customer)
+    # print(cid)
+    account = Account.objects.filter(owner_id=cid)
+    # print(account)
+
+    return render(request,'UserAccount/AccountSummary.html',
+                  {'sessionid':request.session['sessionid'],'account':account,'customer':customer})
+
+def authdetails(request):
+    try:
+        # print("Inside")
+        accnum = request.POST['accnum']
+        # print("This is ",accnum)
+        acc = Account.objects.get(accountNum=accnum)
+        # print(acc)
+        return render(request, 'UserAccount/displaydetails.html',{'sessionid': request.session['sessionid'], 'acc': acc})
+    except:
+        ...
+
+
+def userTransactionReport(request):
+    customer = Customer.objects.get(userid=request.session['sessionid'])
+    cid = customer.id
+    # print(customer)
+    # print(cid)
+    account = Account.objects.filter(owner_id=cid)
+
+
+    return render(request, 'UserAccount/TxnReport.html',
+                  {'sessionid': request.session['sessionid'], 'account': account,'customer': customer})
+
+
+def authReportdetails(request):
+    try:
+        print("Inside")
+        accnum = request.POST['accnum']
+        print("This is ",accnum)
+        txnCr = Transactions.objects.filter(accntFrom=accnum)
+        txnDb = Transactions.objects.filter(accntTo=accnum)
+        print("Here")
+        print("This is",txnDb)
+        print("This is", txnCr)
+        return render(request, 'UserAccount/displayTxndetails.html', {'sessionid': request.session['sessionid'], 'txnDb': txnDb,'txnCr': txnCr})
+    except:
+        ...
+
+class userFundsTransfer_vw(CreateView):
+    model = Account
+    template_name = 'UserAccount/FundsTransfr.html'
+    form_class = userFundsTransfer
+
+    def form_valid(self, form):
+        if form.is_valid():
+            uTrsfr = form.save(commit=False)
+            return super(userFundsTransfer_vw,self).form_valid(form)
 
 
 def user_dd_req(request):
