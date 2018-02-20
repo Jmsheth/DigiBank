@@ -66,8 +66,7 @@ def resetauth(request):
 
     try:
         if pwd1 == pwd2:
-
-            Customer.objects.get(emailAdd=em).update(password=pwd1)
+            Customer.objects.filter(emailAdd=em).update(password=pwd1)
             return redirect('login:login')
     except:
         return redirect('login:resetpassword')
@@ -286,7 +285,8 @@ def user_check_req(request):
         accounts = Account.objects.filter(owner_id=user.id)
         return render(request,
                       "customer_site/user_check_request.html",
-                      {"user": user,
+                      {'sessionid':request.session['sessionid'],
+                       "user": user,
                        "accounts": accounts})
     if request.method == "POST":
         print(request.POST)

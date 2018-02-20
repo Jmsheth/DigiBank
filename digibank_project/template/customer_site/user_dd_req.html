@@ -11,74 +11,97 @@
     {% endfor %}
 </ul>
 {% endif %}
+<div class="container">
+    <h2 class="text-center">Demand Draft Request</h2>
+<h3>Select Account </h3>
+<form class="form-horizontal" role="form" method="post">
+            {% csrf_token %}
+          <div class="form-group" style="margin-left:20%;">
 
-<form method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend>Your Information</legend>
-        <table>
-            <tr>
-                <td>Account:</td>
-                <td><select name="account_from">
+                <label class="control-label col-sm-4">Account:</label>
+                <div class="col-sm-4">
+              <select class="form-control" name="account_from">
                     {% for acc in accounts %}
                     <option value="{{ acc.id }}">
                         <strong>{{ acc.acntType }}</strong> - <kbd>{{ acc.accountNum }}</kbd>
                     </option>
                     {% endfor %}
-                </select></td>
-            </tr>
-            <tr>
-                <td>Amount:</td>
-                <td><input type="number" name="amount"></td>
-            </tr>
-        </table>
-    </fieldset>
-    <fieldset>
-        <legend align="center">Recipient Information</legend>
-        <table align="center">
-            <tr>
-                <td>Name:</td>
-                <td><input type="text" name="rec_name"></td>
-            </tr>
-            <tr>
-                <td>Address</td>
-            </tr>
-            <tr>
-                <td>Street:</td>
-                <td><input type="text" name="address_st"></td>
-            </tr>
-            <tr>
-                <td>City:</td>
-                <td><input type="text" name="address_city"></td>
-            </tr>
-            <tr>
-                <td>State:</td>
-                <td><input type="text" name="address_state"></td>
-            </tr>
-            <tr>
-                <td>Zip Code:</td>
-                <td><input type="text" name="address_zip"></td>
-            </tr>
-            <tr>
-                <td>Phone Number:</td>
-                <td><input type="tel" name="rec_phone"></td>
-            </tr>
-            <tr>
-                <td>Date Payable:</td>
-                <td><input type="date" name="payable_date"></td>
-            </tr>
-            <tr>
-                <td>Send Date:</td>
-                <td><input type="date" name="send_date"></td>
-            </tr>
-            <tr>
-                <td>Message:</td>
-                <td><textarea name="message"></textarea></td>
-            </tr>
-        </table>
+                </select>
+                </div>
 
-    </fieldset>
-    <input type="submit" value="Submit">
+          </div>
+          <div class="form-group " style="margin-left:20%;">
+              <label class="control-label col-sm-4">Amount:</label>
+              <div class="col-sm-4">
+                 <input type="number" name="amount" required>
+              </div>
+          </div>
+            <hr>
+    <h3>Recipient Information</h3>
+
+<div style="margin-left:20%;">
+    <div class="form-group row">
+        <div class="col-xs-3">
+              <label>Name: </label>
+              <input class="form-control" type="text" name="rec_name" required>
+        </div>
+        <div class="col-xs-3">
+              <label>Street: </label>
+              <input class="form-control" type="text" name="address_st" required>
+        </div>
+        <div class="col-xs-3">
+              <label>City: </label>
+                 <input class="form-control" type="text" name="address_city" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-xs-3">
+              <label>State: </label>
+              <input class="form-control" type="text" name="address_state" required>
+        </div>
+        <div class="col-xs-3">
+              <label>Zip Code: </label>
+              <input class="form-control" type="text" name="address_zip" required>
+        </div>
+        <div class="col-xs-3">
+              <label>Phone Number: </label>
+                 <input class="form-control" type="text" name="rec_phone" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-xs-3">
+              <label>Date Payable: </label>
+              <input class="form-control" type="date" name="payable_date" required>
+        </div>
+        <div class="col-xs-3">
+              <label>Send Date: </label>
+              <input class="form-control" type="date" name="send_date" required>
+        </div>
+        <div class="col-xs-3">
+              <label>Message: </label>
+               <textarea class="form-control" name="message"></textarea>
+
+        </div>
+        <br>
+    </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" ></label>
+            <div class="col-md-4">
+                <a href="{% url 'login:cusHome'%}">
+                    <button type="button" class="btn btn-default glyphicon glyphicon-home">
+                        Back
+                    </button>
+                </a>
+                <button class="btn btn-my " type="submit" style="margin-left:5%;"><span class="glyphicon glyphicon-ok"></span>
+                    Submit
+                </button>
+            </div>
+          </div>
+</div>
 </form>
+
+</div>
 
 {% endblock %}

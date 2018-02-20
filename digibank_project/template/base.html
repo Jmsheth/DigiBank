@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
 <nav class="navbar navbar-inverse bg-primary" style="background-color: #2A3457;">
@@ -56,12 +57,12 @@
         	<span class="caret"></span></a>
         	<ul class="dropdown-menu">
           		<li>
-                    <a href="request_checks/">
+                    <a href="{% url 'login:Check Request'%}">
                         Request Checks
                     </a>
                 </li>
                 <li>
-                    <a href="dd_req/">
+                    <a href="{% url 'login:DD Request'%}">
                         Demand Draft Request
                     </a>
                 </li>

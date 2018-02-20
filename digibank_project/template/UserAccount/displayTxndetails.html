@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container">
+<head>
+    <script>
+    function printDiv(){var divToPrint =document.getElementById('areaToPrint');
+    newWin = window.open("");
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
+}
+</script>
+</head>
+<div class="container" id="areaToPrint">
     <h1>Customer Transaction Report</h1>
   	<hr>
 
@@ -59,9 +68,12 @@
   </div>
 
     <a href = "{% url 'login:cusHome'%}" style="margin-left:41%">
-        <button class="btn btn-primary " type="submit">
+        <button class="btn btn-my " type="submit">
             <span class="glyphicon glyphicon-home"></span>
             Back
+        </button>
+        <button class="btn btn-my" onclick="printDiv()">
+        Print
         </button>
     </a>
 </form>

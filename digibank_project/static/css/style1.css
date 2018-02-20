@@ -36,6 +36,11 @@ ul.nav { margin-bottom: 0 !important; }
     background-color: #2A3457;
     color: #ffffff;
 }
+
+.bg-5 {
+    background-color: #000000;
+    color: #ffffff;
+}
 .ess1{
 	text-align: center;
 	padding-top: 50px;

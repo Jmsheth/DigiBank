@@ -2,7 +2,7 @@
 {% block content %}
 {% load staticfiles %}
     <div class="container-fluid bg-11">
-    <h1>Hello, {{employee.firstName}}</h1>
+    <h1>Hello {{employee.firstName}}</h1>
         <br><br>
         <div  class="text-center">
         <font size="72" class="text-center">Digi Bank</font>
@@ -12,16 +12,12 @@
         <br><br><br>
         {% if empsession %}
 
-        <ul class="">
-				<li class="">
 					<div class="row center">
-                    <a href="{% url 'employee_site:empLogout' %}" class="btn btn-primary" role="button">
+                    <a href="{% url 'employee_site:empLogout' %}" class="btn btn-primary btn-lg" style="margin-left:46%" role="button">
 						<span class="glyphicon glyphicon-log-out" aria-hideen="true"></span>&nbsp;
 						Logout
 					</a>
                     </div>
-				</li>
-		</ul>
         {% else %}
         <a href="{% url 'employee_site:empLogin' %}" class="btn btn-primary btn-lg" style="margin-left:46%" role="button">
 						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;
@@ -33,7 +29,7 @@
     </div>
 
     <div class="container-fluid bg-3 text-center">
-    <h3>Where To Find Me?</h3>
+    <h3>Services By DigiBank</h3>
     <div class="row">
     <div class="col-sm-4">
         <h4>Fund Transfer</h4>
@@ -46,13 +42,14 @@
             <img src="../static/css/images/sec.jpg" style="width:60%;" alt="Image">
     </div>
     <div class="col-sm-4">
-      <p>Lorem ipsum..</p>
-      <img src="birds3.jpg" alt="Image">
+      <h4>Customer Support</h4>
+        <p>Customer assistance is our top most priorit and we provide 24*7 customer assistance</p>
+      <img src="../static/css/images/cus.png" style="width:83%;" alt="Image">
     </div>
     </div>
 </div>
 
-<footer class="container-fluid bg-4 text-center" style="padding:3%;">
-  <p>All rights reserved</p>
+<footer class="container-fluid bg-5 text-center" style="padding:1%;">
+  <p>All rights reserved &copy; Digibank World Domination Inc. | Website by: Jay Sheth, Kashif Anwer, and Patrick Kirchhoff</p>
 </footer>
 {% endblock %}

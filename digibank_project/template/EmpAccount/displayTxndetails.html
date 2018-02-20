@@ -2,8 +2,18 @@
 
 {% block content %}
 
+<head>
+    <script>
+    function printDiv(){var divToPrint =document.getElementById('areaToPrint');
+    newWin = window.open("");
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
+}
+</script>
+</head>
 
-<div class="container">
+<div class="container" id="areaToPrint">
     <h1>Customer Transaction Report</h1>
   	<hr>
 
@@ -62,6 +72,9 @@
         <button class="btn btn-primary " type="submit">
             <span class="glyphicon glyphicon-home"></span>
             Back
+        </button>
+        <button class="btn btn-primary" onclick="printDiv()" style="margin-left:5%">
+        Print
         </button>
     </a>
 </form>
