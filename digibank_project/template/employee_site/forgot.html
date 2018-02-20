@@ -1,11 +1,14 @@
 {% extends 'empbase.html' %}
 {% load staticfiles %}
 {% block content %}
-    <div class="card elog" >
+
+<div style="margin-top:3%;" >
+<div class="card elog" >
+        <br>
           <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
 <!--             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" /> -->
             <h3>Forgot your password?</h3>
-            <p>You can reset your password here.</p>
+            <p>You can reset your password here.</p><br>
             <form class="form-signin" method="post" action="{% url 'employee_site:reset' %}">
             {% csrf_token %}
                 <input name="email" class="form-control" placeholder="Email address" required autofocus><br>
@@ -13,5 +16,6 @@
                 <br><br>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Reset password</button>
             </form><br>
-    </div>
+</div>
+</div>
 {% endblock %}

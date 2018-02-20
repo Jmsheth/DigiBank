@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-    <div class="card back" >
-          <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
+
+<div style="margin-top:3%;" >
+<div class="card back" >
+        <br>
+        <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
             <h4>Reset Password</h4><br>
             <form class="form-signin" method="post" action="{% url 'login:resetauth' %}">
             {% csrf_token %}
@@ -13,4 +16,5 @@
             </form><br>
             
     </div>
+</div>
 {% endblock %}

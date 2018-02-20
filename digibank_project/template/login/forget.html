@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-    <div class="card back" >
-          <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
+   <div style="margin-top:3%;" >
+<div class="card back" >
+        <br>
+        <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
 <!--             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" /> -->
             <h3>Forgot your password?</h3>
             <p>You can reset your password here.</p>
@@ -14,4 +16,5 @@
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Reset password</button>
             </form><br>
     </div>
+   </div>
 {% endblock %}

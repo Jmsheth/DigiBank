@@ -1,19 +1,36 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-    <div class="card back" >
+<div style="margin-top:3%;" >
+
+<div class="card back" >
+        <br>
           <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
 <!--             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" /> -->
-            <h4>Login to your account</h4><br>
+            <br><br><br>
             <form class="form-signin" method="post" action="{% url 'login:auth' %}">
             {% csrf_token %}
-                <input id="loginid" name="loginid" class="form-control" placeholder="Login ID" required autofocus><br>
-                <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Password" required>
-                <br><br>
+                <!--<div class="form-group input-group col-xs-4 col-sm-8 col-md-8">
+            		<span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span>
+            		<input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
+		      	</div>-->
+
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"></span></span>
+      <input id="loginid" name="loginid" class="form-control" placeholder="Login ID" required autofocus aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-lock"></span></span>
+      <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Password" required autofocus aria-describedby="basic-addon2">
+    </div>
+                <br>
+
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
             </form><br>
             <a href="{% url 'login:forgot'%}" class="fp1">
                 Forgot the password?
             </a>
     </div>
+</div>
 {% endblock %}

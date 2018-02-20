@@ -3,7 +3,58 @@
 {% block title %}DigiBank{% endblock %}
 
 {% block content %}
-  <h3>Hello, {{ customer.firstName }}</h3>
-  <h1 class="ess1">Welcome to Home Page</h1>
-  
+    <div class="mycol">
+    <div class="container-fluid bg-11">
+    <h3>Hello, {{customer.firstName}}</h3>
+        <br><br>
+        <div  class="text-center">
+        <font size="72" class="text-center">Digi Bank</font>
+    <br>
+    <h3>The Future of Banking.</h3>
+        </div>
+        <br><br><br>
+        {% if sessionid %}
+
+       		<div class="row center">
+                    <a href="{% url 'login:logout' %}" class="btn btn-my btn-lg" style="margin-left:46%" role="button">
+						<span class="glyphicon glyphicon-log-out" aria-hideen="true"></span>&nbsp;
+						Logout
+					</a>
+                    </div>
+
+        {% else %}
+        <a href="{% url 'login:login' %}" class="btn btn-my btn-lg" style="margin-left:46%" role="button">
+						<span class="glyphicon glyphicon-log-in" aria-hideen="true"></span>&nbsp;
+						Login
+		</a>
+
+        {% endif %}
+        <br><br><br>
+    </div>
+
+    <div class="container-fluid bg-3 text-center">
+    <h3>Where To Find Me?</h3>
+    <div class="row">
+    <div class="col-sm-4">
+        <h4>Fund Transfer</h4>
+      <p>Easy fast and reliable to transfer money between two different accounts.</p>
+      <img src="../static/css/images/trans-1.jpg" alt="Image">
+    </div>
+    <div class="col-sm-4">
+        <h4>Security Against Fraud</h4>
+      <p>Essential layers of security works as giant wall for all issues related to security.</p>
+            <img src="../static/css/images/sec.jpg" style="width:60%;" alt="Image">
+    </div>
+    <div class="col-sm-4">
+      <p>Lorem ipsum..</p>
+      <img src="birds3.jpg" alt="Image">
+    </div>
+    </div>
+</div>
+    </div>
+<footer class="container-fluid bg-4 text-center" style="padding:2%;">
+  <p>All rights reserved</p>
+</footer>
+
+
 {% endblock %}

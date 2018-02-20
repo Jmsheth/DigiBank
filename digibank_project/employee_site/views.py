@@ -174,7 +174,8 @@ def emp_dd_req(request, pk=-1):
     if request.method == "GET":
         return render(request,
                       "employee_site/emp_dd_req.html",
-                      {"dd_requests": dd_requests,
+                      {"empsession": request.session['empsession'],
+                       "dd_requests": dd_requests,
                        "dd_req": dd_req,
                        "customer": customer})
     if request.method == "POST":

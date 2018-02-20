@@ -1,14 +1,24 @@
 {% extends 'empbase.html' %}
 {% load staticfiles %}
 {% block content %}
-    <div class="card elog" >
+  <div style="margin-top:3%;" >
+
+<div class="card elog" >
+        <br>
           <img class="profile-img-card" src="{% static 'css/images/logo.png'%}" alt="" />
 <!--             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" /> -->
-            <h4>Login to your account</h4><br>
+            <br><br><br>
             <form class="form-signin" method="post" action="{% url 'employee_site:auth' %}">
             {% csrf_token %}
-                <input name="userid" class="form-control" placeholder="Login ID" required autofocus><br>
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"></span></span>
+                <input name="userid" class="form-control" placeholder="Login ID" required autofocus aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-lock"></span></span>
+                <input type="password" name="password" class="form-control" placeholder="Password" required autofocus aria-describedby="basic-addon2">
+            </div>
                 <br><br>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
             </form><br>
@@ -16,4 +26,5 @@
                 Forgot the password?
             </a>
     </div>
+  </div>
 {% endblock %}
