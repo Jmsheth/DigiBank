@@ -1,47 +1,54 @@
 {% extends "empbase.html" %}
 {% load staticfiles %}
 {% block content %}
-    <div id="req_list"
+ <h3 class="text-center">Approve Demand Draft Request</h3>
+<br>
+<div id="req_list"
          align="justify"
-         style="float: left; width: 50%">
+         style="float: left; width: 34%">
         <form method="get">
-            <table align="center" class="btn-group-vertical btn-group-lg">
+                <h4 style="text-align:center;"><b>Select request to view:</b></h4>
+                <br>
             {% for req in dd_requests %}
-                <tr>
-                    <td>
-                        <span class="">
-                        <BUTTON class="btn-block btn-default" type="submit"
+                <BUTTON class="btn-md btn-default col-xs-5" type="submit"
                                 value="{{ req }}"
-                                formaction="/employee/dd_req/{{ req.id }}/">
+                                formaction="/employee/dd_req/{{ req.id }}/"
+                                style="margin-left:25%">
                             {{ req }}
-                        </BUTTON>
-                        </span>
-                    </td>
-                </tr>
+                </BUTTON>
             {% endfor %}
-            </table>
+
         </form>
     </div>
-    <div id="req_details"
-         style="float: right; width: 50%"
+
+
+
+
+
+
+
+
+    <div id="req_details33"
+         style="float: right; width: 66%"
          align="justify">
             <fieldset>
                 <legend>Demand Draft Request</legend>
+                <div style="margin-left:20%;">
                 <table>
                     <tr>
-                        <td>Request ID:</td>
-                        <td>{{ dd_req.id }}</td>
+                        <td><b>Request ID:</b></td>
+                        <td style="margin-left:15%;">{{ dd_req.id }}</td>
                     </tr>
                     <tr>
-                        <td>Recipient Name:</td>
+                        <td><b>Recipient Name:</b></td>
                         <td>{{ dd_req.rec_name }}</td>
                     </tr>
                     <tr>
-                        <td>Amount:</td>
+                        <td><b>Amount:</b></td>
                         <td>${{ dd_req.amount }}</td>
                     </tr>
                     <tr>
-                        <td>Address:</td>
+                        <td><b>Address:</b></td>
                         <td>{{ dd_req.address_st }},
                             {{ dd_req.address_city }},
                             {{ dd_req.address_state }},
@@ -49,34 +56,38 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Recipient Phone Number:</td>
+                        <td><b>Recipient Phone Number:</b></td>
                         <td>{{ dd_req.rec_phone }}</td>
                     </tr>
                     <tr>
-                        <td>Send Date:</td>
+                        <td><b>Send Date:</b></td>
                         <td>{{ dd_req.send_date }}</td>
                     </tr>
                     <tr>
-                        <td>Payable Date:</td>
+                        <td><b>Payable Date:</b></td>
                         <td>{{ dd_req.payable_date }}</td>
                     </tr>
                     <tr>
-                        <td>Message:</td>
+                        <td><b>Message:</b></td>
+                        <td>{{ dd_req.message }}</td>
                     </tr>
                 </table>
-                <p align="center">{{ dd_req.message }}</p>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Requested By:</legend>
+                <div style="margin-left:20%;"><b>
                 {{ customer.firstName }}
-                {{ customer.lastName }} <br/>
-                {{ customer.userid }}
+                    {{ customer.lastName }} </b>
+                </div><br><br>
             </fieldset>
+        <br><br>
         <form action="/employee/dd_req/{{ dd_req.id }}/" method="post">
             {% csrf_token %}
             <input type="submit"
                    value="Approve"
-                   class="btn-block btn-default"/>
+                   class="btn btn-primary btn-lg"
+                    style="margin-left:43%;"/>
         </form>
     </div>
 {% endblock %}
